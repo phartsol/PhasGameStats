@@ -1,0 +1,26 @@
+﻿body {
+    background-color: aliceblue;
+    color: black;
+}
+
+h1, h2, h3, h4, h5, span {
+    color: darkorchid;
+    text-align: center;
+}
+
+/*div {
+    color:white;
+    background-color:white;
+}*/
+
+select {
+    color: white;
+    background-color: white;
+}
+
+em {
+    /*color: purple;
+    background-color: blue;
+    font: bold;
+    font-size:xx-large;*/
+}

@@ -1,0 +1,77 @@
+﻿@{
+    ViewBag.Title = "Game Stats!";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<div class="container-fluid" style="background-color:cornflowerblue;color:white;text-align:center; width:700px; font-size:small">*@
+
+
+<div class="row text-center">
+
+    <div class="col-md-12 mt-3" id="phart">
+        <h2><em>Welcome To PhaS Game Stats!</em></h2>
+        <span><em>Please select one of the options below!</em></span><br />
+        <span><em>Please select carefully!!</em></span>
+    </div>
+</div>
+
+<br />
+<hr />
+<br />
+
+<div class="row text-center">
+
+    <div class="col-md-4 mt-3"></div>
+
+    <div class="col-md-4">
+        <form action="/home/Dashboard">
+            <button id="MainEntry" type="submit" class="btn btn-outline-success btn-block">You are 18+ Years of Age</button><br />
+            <button id="MainError" type="submit" class="btn btn-outline-danger btn-block" formaction="/home/Error">You are < 18 Years of Age</button><br />
+        </form>
+    </div>
+
+    <div class="col-md-4 mt-3"></div>
+
+    <script>
+        //const myHeading = document.querySelector('h1');
+        //myHeading.textContent = 'Hello world!';
+
+        //document.querySelector('html').onclick = function () {
+        //    alert('Ouch! Stop poking me!');
+        //}
+    </script>
+
+</div>
+
+@*<div class="row">
+        <input type="submit" value="Create" class="btn btn-default" id="btnSubmit" />
+    </div>*@
+
+<br />
+<br />
+
+
+@*<script type="text/javascript">
+
+        //$(document).ready(function () {
+
+                    // straight JS to show alert Hello
+            //var myBtn = document.getElementById('btnSubmit');
+
+            //myBtn.addEventListener('click', function (e) {  // e is used, but could be any letter
+            //    e.preventDefault(); //This prevents the default action
+            //    alert('Hello');
+            //});
+
+                    // JQuery version to show alert Hello
+            //$('#btnSubmit').click(function (event) {        // event is used, but could have used e
+            //    event.preventDefault(); //This prevents the default action
+            //    alert("Hello"); //Show the alert
+            //});
+        //});
+
+    </script>*@
+
+
+
+

@@ -1,0 +1,1439 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SportsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Franchise">
+          <Key>
+            <PropertyRef Name="FranchiseId" />
+          </Key>
+          <Property Name="FranchiseId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ownerid" Type="int" Nullable="false" />
+          <Property Name="SportTypeCode" Type="varchar" MaxLength="10" />
+          <Property Name="StartDt" Type="datetime" Nullable="false" />
+          <Property Name="EndDt" Type="datetime" />
+          <Property Name="mod_usr" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="mod_date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FranchiseName">
+          <Key>
+            <PropertyRef Name="FranchiseNameId" />
+          </Key>
+          <Property Name="FranchiseNameId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FranchiseId" Type="int" Nullable="false" />
+          <Property Name="Region" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="StartDt" Type="datetime" Nullable="false" />
+          <Property Name="EndDt" Type="datetime" />
+          <Property Name="mod_usr" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="mod_date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FranchiseOwner">
+          <Key>
+            <PropertyRef Name="OwnerId" />
+          </Key>
+          <Property Name="OwnerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Prefix" Type="varchar" MaxLength="10" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" />
+          <Property Name="Middle" Type="varchar" MaxLength="50" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="StartDt" Type="datetime" Nullable="false" />
+          <Property Name="EndDt" Type="datetime" />
+          <Property Name="mod_usr" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="mod_date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FranchisePosition">
+          <Key>
+            <PropertyRef Name="FranchisePositionId" />
+          </Key>
+          <Property Name="FranchisePositionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FranchiseId" Type="int" Nullable="false" />
+          <Property Name="PersonId" Type="int" Nullable="false" />
+          <Property Name="PositionCodeId" Type="int" Nullable="false" />
+          <Property Name="StartDt" Type="datetime" Nullable="false" />
+          <Property Name="EndDt" Type="datetime" />
+          <Property Name="mod_usr" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="mod_date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FranchiseSportType">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FranchiseId" Type="int" Nullable="false" />
+          <Property Name="SportTypeCode" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="StartDt" Type="datetime" Nullable="false" />
+          <Property Name="EndDt" Type="datetime" />
+          <Property Name="mod_usr" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="mod_date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FranchiseTeam">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="seasonid" Type="int" Nullable="false" />
+          <Property Name="franchiseid" Type="int" Nullable="false" />
+          <Property Name="div_cd" Type="varchar" MaxLength="10" />
+          <Property Name="StartDt" Type="datetime" Nullable="false" />
+          <Property Name="EndDt" Type="datetime" />
+          <Property Name="mod_user" Type="varchar" MaxLength="20" />
+          <Property Name="mod_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="Personid" />
+          </Key>
+          <Property Name="Personid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MiddleName" Type="varchar" MaxLength="50" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CommonName" Type="varchar" MaxLength="30" />
+          <Property Name="Suffix" Type="varchar" MaxLength="20" />
+          <Property Name="BirthDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="mod_usr" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="mod_date" Type="datetime" Nullable="false" />
+          <Property Name="DOD" Type="datetime" />
+          <Property Name="SportTypeGroupCode" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="StartDt" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PositionCode">
+          <Key>
+            <PropertyRef Name="PositionCodeId" />
+          </Key>
+          <Property Name="PositionCodeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PositionCode" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="PositionDescrip" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="SportTypeCode" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="StartDt" Type="datetime" Nullable="false" />
+          <Property Name="EndDt" Type="datetime" />
+          <Property Name="mod_usr" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="mod_date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Season">
+          <Key>
+            <PropertyRef Name="seasonid" />
+          </Key>
+          <Property Name="seasonid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SportTypeCode" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="startdate" Type="datetime" Nullable="false" />
+          <Property Name="mod_user" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="mod_date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SportType">
+          <Key>
+            <PropertyRef Name="SportTypeCode" />
+          </Key>
+          <Property Name="SportTypeCode" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="SportTypeGroupCode" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="SportTypeDescrip" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="SeasonStartMonth" Type="int" Nullable="false" />
+          <Property Name="mod_user" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="mod_date" Type="datetime" Nullable="false" />
+          <Property Name="SportTypeShortName" Type="varchar" MaxLength="50" />
+          <Property Name="SportStartYear" Type="int" />
+          <Property Name="ParentTypeCode" Type="varchar" MaxLength="10" />
+          <Property Name="SportEndYear" Type="int" />
+        </EntityType>
+        <EntityType Name="SportTypeGroup">
+          <Key>
+            <PropertyRef Name="SportTypeGroupCode" />
+          </Key>
+          <Property Name="SportTypeGroupCode" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="SportTypeGroupDescrip" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="mod_user" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="mod_date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Stadium">
+          <Key>
+            <PropertyRef Name="StadiumId" />
+          </Key>
+          <Property Name="StadiumId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AddressId" Type="int" Nullable="false" />
+          <Property Name="StadiumName" Type="varchar" MaxLength="50" />
+          <Property Name="StadiumSurfaceCodeId" Type="int" Nullable="false" />
+          <Property Name="StartDt" Type="datetime" Nullable="false" />
+          <Property Name="EndDt" Type="datetime" />
+          <Property Name="mod_usr" Type="varchar" MaxLength="50" />
+          <Property Name="mod_date" Type="datetime" />
+          <Property Name="SportTypeGroupCode" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="StadiumSurfaceCode">
+          <Key>
+            <PropertyRef Name="StadiumSurfaceCodeId" />
+          </Key>
+          <Property Name="StadiumSurfaceCodeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StadiumSurfaceCode" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="SurfaceName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="StartDt" Type="datetime" Nullable="false" />
+          <Property Name="EndDt" Type="datetime" />
+          <Property Name="mod_usr" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="mod_date" Type="datetime" Nullable="false" />
+          <Property Name="SportTypeGroupCode" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="StateCode">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StateCode" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="mod_usr" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="mod_date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Sports.MjrSport.AllGamesView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="AllGamesView">
+          <Key>
+            <PropertyRef Name="SeasonId" />
+            <PropertyRef Name="SportTypeCode" />
+            <PropertyRef Name="SportStartDate" />
+            <PropertyRef Name="GameId" />
+            <PropertyRef Name="HomeFranchiseId" />
+            <PropertyRef Name="HomeTeam" />
+            <PropertyRef Name="VisitorFranchiseId" />
+            <PropertyRef Name="VisitorTeam" />
+            <PropertyRef Name="GameDtm" />
+            <PropertyRef Name="Preseason" />
+          </Key>
+          <Property Name="SeasonId" Type="int" Nullable="false" />
+          <Property Name="SportTypeCode" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="SportStartDate" Type="datetime" Nullable="false" />
+          <Property Name="GameId" Type="int" Nullable="false" />
+          <Property Name="HomeFranchiseId" Type="int" Nullable="false" />
+          <Property Name="HomeTeam" Type="varchar" MaxLength="201" Nullable="false" />
+          <Property Name="HomeScore" Type="int" />
+          <Property Name="VisitorFranchiseId" Type="int" Nullable="false" />
+          <Property Name="VisitorTeam" Type="varchar" MaxLength="201" Nullable="false" />
+          <Property Name="VisitorScore" Type="int" />
+          <Property Name="GameDtm" Type="datetime" Nullable="false" />
+          <Property Name="Preseason" Type="bit" Nullable="false" />
+          <Property Name="PlayoffId" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Sports.MjrSport.AllTeamRecordsPerctGamesBehindView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="AllTeamRecordsPerctGamesBehindView">
+          <Key>
+            <PropertyRef Name="seasonid" />
+            <PropertyRef Name="SportTypeCode" />
+            <PropertyRef Name="conference" />
+            <PropertyRef Name="division" />
+            <PropertyRef Name="franchiseid" />
+            <PropertyRef Name="team" />
+          </Key>
+          <Property Name="seasonid" Type="int" Nullable="false" />
+          <Property Name="SportTypeCode" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="SportYear" Type="int" />
+          <Property Name="conference" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="division" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="franchiseid" Type="int" Nullable="false" />
+          <Property Name="team" Type="varchar" MaxLength="201" Nullable="false" />
+          <Property Name="WINS" Type="int" />
+          <Property Name="LOSES" Type="int" />
+          <Property Name="TIES" Type="int" />
+          <Property Name="PERCT" Type="float" />
+          <Property Name="HOMEREC" Type="varchar" MaxLength="15" />
+          <Property Name="AWAYREC" Type="varchar" MaxLength="15" />
+          <Property Name="GB" Type="decimal" Precision="4" Scale="1" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Sports.MjrSport.AllTeamRecordsPerctView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="AllTeamRecordsPerctView">
+          <Key>
+            <PropertyRef Name="seasonid" />
+            <PropertyRef Name="SportTypeCode" />
+            <PropertyRef Name="conference" />
+            <PropertyRef Name="division" />
+            <PropertyRef Name="franchiseid" />
+            <PropertyRef Name="Team" />
+          </Key>
+          <Property Name="seasonid" Type="int" Nullable="false" />
+          <Property Name="SportTypeCode" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="SportYear" Type="int" />
+          <Property Name="conference" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="division" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="franchiseid" Type="int" Nullable="false" />
+          <Property Name="Team" Type="varchar" MaxLength="201" Nullable="false" />
+          <Property Name="WINS" Type="int" />
+          <Property Name="LOSES" Type="int" />
+          <Property Name="TIES" Type="int" />
+          <Property Name="PERCT" Type="float" />
+          <Property Name="HOMEREC" Type="varchar" MaxLength="15" />
+          <Property Name="AWAYREC" Type="varchar" MaxLength="15" />
+        </EntityType>
+        <Association Name="FK__Franchise__Franc__2003926C">
+          <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
+          <End Role="FranchiseName" Type="Self.FranchiseName" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Franchise">
+              <PropertyRef Name="FranchiseId" />
+            </Principal>
+            <Dependent Role="FranchiseName">
+              <PropertyRef Name="FranchiseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Franchise__Franc__20C2AC7B">
+          <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
+          <End Role="FranchiseSportType" Type="Self.FranchiseSportType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Franchise">
+              <PropertyRef Name="FranchiseId" />
+            </Principal>
+            <Dependent Role="FranchiseSportType">
+              <PropertyRef Name="FranchiseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Franchise__Franc__20F7B6A5">
+          <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
+          <End Role="FranchisePosition" Type="Self.FranchisePosition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Franchise">
+              <PropertyRef Name="FranchiseId" />
+            </Principal>
+            <Dependent Role="FranchisePosition">
+              <PropertyRef Name="FranchiseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Franchise__franc__4905A7FF">
+          <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
+          <End Role="FranchiseTeam" Type="Self.FranchiseTeam" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Franchise">
+              <PropertyRef Name="FranchiseId" />
+            </Principal>
+            <Dependent Role="FranchiseTeam">
+              <PropertyRef Name="franchiseid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Franchise__owner__64ADC274">
+          <End Role="FranchiseOwner" Type="Self.FranchiseOwner" Multiplicity="1" />
+          <End Role="Franchise" Type="Self.Franchise" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FranchiseOwner">
+              <PropertyRef Name="OwnerId" />
+            </Principal>
+            <Dependent Role="Franchise">
+              <PropertyRef Name="ownerid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Franchise__Perso__79DDE984">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="FranchisePosition" Type="Self.FranchisePosition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Personid" />
+            </Principal>
+            <Dependent Role="FranchisePosition">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Franchise__Posit__7AD20DBD">
+          <End Role="PositionCode" Type="Self.PositionCode" Multiplicity="1" />
+          <End Role="FranchisePosition" Type="Self.FranchisePosition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PositionCode">
+              <PropertyRef Name="PositionCodeId" />
+            </Principal>
+            <Dependent Role="FranchisePosition">
+              <PropertyRef Name="PositionCodeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Franchise__seaso__49F9CC38">
+          <End Role="Season" Type="Self.Season" Multiplicity="1" />
+          <End Role="FranchiseTeam" Type="Self.FranchiseTeam" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Season">
+              <PropertyRef Name="seasonid" />
+            </Principal>
+            <Dependent Role="FranchiseTeam">
+              <PropertyRef Name="seasonid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Franchise__Sport__1B3EDD4F">
+          <End Role="SportType" Type="Self.SportType" Multiplicity="0..1" />
+          <End Role="Franchise" Type="Self.Franchise" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SportType">
+              <PropertyRef Name="SportTypeCode" />
+            </Principal>
+            <Dependent Role="Franchise">
+              <PropertyRef Name="SportTypeCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Franchise__Sport__21B6D0B4">
+          <End Role="SportType" Type="Self.SportType" Multiplicity="1" />
+          <End Role="FranchiseSportType" Type="Self.FranchiseSportType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SportType">
+              <PropertyRef Name="SportTypeCode" />
+            </Principal>
+            <Dependent Role="FranchiseSportType">
+              <PropertyRef Name="SportTypeCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Person__SportTyp__298CFCA6">
+          <End Role="SportTypeGroup" Type="Self.SportTypeGroup" Multiplicity="1" />
+          <End Role="Person" Type="Self.Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SportTypeGroup">
+              <PropertyRef Name="SportTypeGroupCode" />
+            </Principal>
+            <Dependent Role="Person">
+              <PropertyRef Name="SportTypeGroupCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PositionC__Sport__760D58A0">
+          <End Role="SportType" Type="Self.SportType" Multiplicity="1" />
+          <End Role="PositionCode" Type="Self.PositionCode" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SportType">
+              <PropertyRef Name="SportTypeCode" />
+            </Principal>
+            <Dependent Role="PositionCode">
+              <PropertyRef Name="SportTypeCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Season__SportTyp__27D9BE5E">
+          <End Role="SportType" Type="Self.SportType" Multiplicity="1" />
+          <End Role="Season" Type="Self.Season" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SportType">
+              <PropertyRef Name="SportTypeCode" />
+            </Principal>
+            <Dependent Role="Season">
+              <PropertyRef Name="SportTypeCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SportType__Sport__1BFDF75E">
+          <End Role="SportTypeGroup" Type="Self.SportTypeGroup" Multiplicity="1" />
+          <End Role="SportType" Type="Self.SportType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SportTypeGroup">
+              <PropertyRef Name="SportTypeGroupCode" />
+            </Principal>
+            <Dependent Role="SportType">
+              <PropertyRef Name="SportTypeGroupCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Stadium__Stadium__593C0FC8">
+          <End Role="StadiumSurfaceCode" Type="Self.StadiumSurfaceCode" Multiplicity="1" />
+          <End Role="Stadium" Type="Self.Stadium" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StadiumSurfaceCode">
+              <PropertyRef Name="StadiumSurfaceCodeId" />
+            </Principal>
+            <Dependent Role="Stadium">
+              <PropertyRef Name="StadiumSurfaceCodeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StadiumSu__Sport__07F6FEB1">
+          <End Role="SportTypeGroup" Type="Self.SportTypeGroup" Multiplicity="0..1" />
+          <End Role="StadiumSurfaceCode" Type="Self.StadiumSurfaceCode" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SportTypeGroup">
+              <PropertyRef Name="SportTypeGroupCode" />
+            </Principal>
+            <Dependent Role="StadiumSurfaceCode">
+              <PropertyRef Name="SportTypeGroupCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="GetGamesBehind" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="MjrSport" ReturnType="decimal">
+          <Parameter Name="pSeasonId" Type="int" Mode="In" />
+          <Parameter Name="pFranchiseId" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="SportsModelStoreContainer">
+          <EntitySet Name="Franchise" EntityType="Self.Franchise" Schema="MjrSport" store:Type="Tables" />
+          <EntitySet Name="FranchiseName" EntityType="Self.FranchiseName" Schema="MjrSport" store:Type="Tables" />
+          <EntitySet Name="FranchiseOwner" EntityType="Self.FranchiseOwner" Schema="MjrSport" store:Type="Tables" />
+          <EntitySet Name="FranchisePosition" EntityType="Self.FranchisePosition" Schema="MjrSport" store:Type="Tables" />
+          <EntitySet Name="FranchiseSportType" EntityType="Self.FranchiseSportType" Schema="MjrSport" store:Type="Tables" />
+          <EntitySet Name="FranchiseTeam" EntityType="Self.FranchiseTeam" Schema="MjrSport" store:Type="Tables" />
+          <EntitySet Name="Person" EntityType="Self.Person" Schema="MjrSport" store:Type="Tables" />
+          <EntitySet Name="PositionCode" EntityType="Self.PositionCode" Schema="MjrSport" store:Type="Tables" />
+          <EntitySet Name="Season" EntityType="Self.Season" Schema="MjrSport" store:Type="Tables" />
+          <EntitySet Name="SportType" EntityType="Self.SportType" Schema="MjrSport" store:Type="Tables" />
+          <EntitySet Name="SportTypeGroup" EntityType="Self.SportTypeGroup" Schema="MjrSport" store:Type="Tables" />
+          <EntitySet Name="Stadium" EntityType="Self.Stadium" Schema="MjrSport" store:Type="Tables" />
+          <EntitySet Name="StadiumSurfaceCode" EntityType="Self.StadiumSurfaceCode" Schema="MjrSport" store:Type="Tables" />
+          <EntitySet Name="StateCode" EntityType="Self.StateCode" Schema="MjrSport" store:Type="Tables" />
+          <EntitySet Name="AllGamesView" EntityType="Self.AllGamesView" store:Type="Views" store:Schema="MjrSport">
+            <DefiningQuery>SELECT 
+    [AllGamesView].[SeasonId] AS [SeasonId], 
+    [AllGamesView].[SportTypeCode] AS [SportTypeCode], 
+    [AllGamesView].[SportStartDate] AS [SportStartDate], 
+    [AllGamesView].[GameId] AS [GameId], 
+    [AllGamesView].[HomeFranchiseId] AS [HomeFranchiseId], 
+    [AllGamesView].[HomeTeam] AS [HomeTeam], 
+    [AllGamesView].[HomeScore] AS [HomeScore], 
+    [AllGamesView].[VisitorFranchiseId] AS [VisitorFranchiseId], 
+    [AllGamesView].[VisitorTeam] AS [VisitorTeam], 
+    [AllGamesView].[VisitorScore] AS [VisitorScore], 
+    [AllGamesView].[GameDtm] AS [GameDtm], 
+    [AllGamesView].[Preseason] AS [Preseason], 
+    [AllGamesView].[PlayoffId] AS [PlayoffId]
+    FROM [MjrSport].[AllGamesView] AS [AllGamesView]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="AllTeamRecordsPerctGamesBehindView" EntityType="Self.AllTeamRecordsPerctGamesBehindView" store:Type="Views" store:Schema="MjrSport">
+            <DefiningQuery>SELECT 
+    [AllTeamRecordsPerctGamesBehindView].[seasonid] AS [seasonid], 
+    [AllTeamRecordsPerctGamesBehindView].[SportTypeCode] AS [SportTypeCode], 
+    [AllTeamRecordsPerctGamesBehindView].[SportYear] AS [SportYear], 
+    [AllTeamRecordsPerctGamesBehindView].[conference] AS [conference], 
+    [AllTeamRecordsPerctGamesBehindView].[division] AS [division], 
+    [AllTeamRecordsPerctGamesBehindView].[franchiseid] AS [franchiseid], 
+    [AllTeamRecordsPerctGamesBehindView].[team] AS [team], 
+    [AllTeamRecordsPerctGamesBehindView].[WINS] AS [WINS], 
+    [AllTeamRecordsPerctGamesBehindView].[LOSES] AS [LOSES], 
+    [AllTeamRecordsPerctGamesBehindView].[TIES] AS [TIES], 
+    [AllTeamRecordsPerctGamesBehindView].[PERCT] AS [PERCT], 
+    [AllTeamRecordsPerctGamesBehindView].[HOMEREC] AS [HOMEREC], 
+    [AllTeamRecordsPerctGamesBehindView].[AWAYREC] AS [AWAYREC], 
+    [AllTeamRecordsPerctGamesBehindView].[GB] AS [GB]
+    FROM [MjrSport].[AllTeamRecordsPerctGamesBehindView] AS [AllTeamRecordsPerctGamesBehindView]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="AllTeamRecordsPerctView" EntityType="Self.AllTeamRecordsPerctView" store:Type="Views" store:Schema="MjrSport">
+            <DefiningQuery>SELECT 
+    [AllTeamRecordsPerctView].[seasonid] AS [seasonid], 
+    [AllTeamRecordsPerctView].[SportTypeCode] AS [SportTypeCode], 
+    [AllTeamRecordsPerctView].[SportYear] AS [SportYear], 
+    [AllTeamRecordsPerctView].[conference] AS [conference], 
+    [AllTeamRecordsPerctView].[division] AS [division], 
+    [AllTeamRecordsPerctView].[franchiseid] AS [franchiseid], 
+    [AllTeamRecordsPerctView].[Team] AS [Team], 
+    [AllTeamRecordsPerctView].[WINS] AS [WINS], 
+    [AllTeamRecordsPerctView].[LOSES] AS [LOSES], 
+    [AllTeamRecordsPerctView].[TIES] AS [TIES], 
+    [AllTeamRecordsPerctView].[PERCT] AS [PERCT], 
+    [AllTeamRecordsPerctView].[HOMEREC] AS [HOMEREC], 
+    [AllTeamRecordsPerctView].[AWAYREC] AS [AWAYREC]
+    FROM [MjrSport].[AllTeamRecordsPerctView] AS [AllTeamRecordsPerctView]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__Franchise__Franc__2003926C" Association="Self.FK__Franchise__Franc__2003926C">
+            <End Role="Franchise" EntitySet="Franchise" />
+            <End Role="FranchiseName" EntitySet="FranchiseName" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Franchise__Franc__20C2AC7B" Association="Self.FK__Franchise__Franc__20C2AC7B">
+            <End Role="Franchise" EntitySet="Franchise" />
+            <End Role="FranchiseSportType" EntitySet="FranchiseSportType" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Franchise__Franc__20F7B6A5" Association="Self.FK__Franchise__Franc__20F7B6A5">
+            <End Role="Franchise" EntitySet="Franchise" />
+            <End Role="FranchisePosition" EntitySet="FranchisePosition" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Franchise__franc__4905A7FF" Association="Self.FK__Franchise__franc__4905A7FF">
+            <End Role="Franchise" EntitySet="Franchise" />
+            <End Role="FranchiseTeam" EntitySet="FranchiseTeam" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Franchise__owner__64ADC274" Association="Self.FK__Franchise__owner__64ADC274">
+            <End Role="FranchiseOwner" EntitySet="FranchiseOwner" />
+            <End Role="Franchise" EntitySet="Franchise" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Franchise__Perso__79DDE984" Association="Self.FK__Franchise__Perso__79DDE984">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="FranchisePosition" EntitySet="FranchisePosition" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Franchise__Posit__7AD20DBD" Association="Self.FK__Franchise__Posit__7AD20DBD">
+            <End Role="PositionCode" EntitySet="PositionCode" />
+            <End Role="FranchisePosition" EntitySet="FranchisePosition" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Franchise__seaso__49F9CC38" Association="Self.FK__Franchise__seaso__49F9CC38">
+            <End Role="Season" EntitySet="Season" />
+            <End Role="FranchiseTeam" EntitySet="FranchiseTeam" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Franchise__Sport__1B3EDD4F" Association="Self.FK__Franchise__Sport__1B3EDD4F">
+            <End Role="SportType" EntitySet="SportType" />
+            <End Role="Franchise" EntitySet="Franchise" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Franchise__Sport__21B6D0B4" Association="Self.FK__Franchise__Sport__21B6D0B4">
+            <End Role="SportType" EntitySet="SportType" />
+            <End Role="FranchiseSportType" EntitySet="FranchiseSportType" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Person__SportTyp__298CFCA6" Association="Self.FK__Person__SportTyp__298CFCA6">
+            <End Role="SportTypeGroup" EntitySet="SportTypeGroup" />
+            <End Role="Person" EntitySet="Person" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PositionC__Sport__760D58A0" Association="Self.FK__PositionC__Sport__760D58A0">
+            <End Role="SportType" EntitySet="SportType" />
+            <End Role="PositionCode" EntitySet="PositionCode" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Season__SportTyp__27D9BE5E" Association="Self.FK__Season__SportTyp__27D9BE5E">
+            <End Role="SportType" EntitySet="SportType" />
+            <End Role="Season" EntitySet="Season" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SportType__Sport__1BFDF75E" Association="Self.FK__SportType__Sport__1BFDF75E">
+            <End Role="SportTypeGroup" EntitySet="SportTypeGroup" />
+            <End Role="SportType" EntitySet="SportType" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Stadium__Stadium__593C0FC8" Association="Self.FK__Stadium__Stadium__593C0FC8">
+            <End Role="StadiumSurfaceCode" EntitySet="StadiumSurfaceCode" />
+            <End Role="Stadium" EntitySet="Stadium" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StadiumSu__Sport__07F6FEB1" Association="Self.FK__StadiumSu__Sport__07F6FEB1">
+            <End Role="SportTypeGroup" EntitySet="SportTypeGroup" />
+            <End Role="StadiumSurfaceCode" EntitySet="StadiumSurfaceCode" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SportsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Franchise">
+          <Key>
+            <PropertyRef Name="FranchiseId" />
+          </Key>
+          <Property Name="FranchiseId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ownerid" Type="Int32" Nullable="false" />
+          <Property Name="SportTypeCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="StartDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDt" Type="DateTime" Precision="3" />
+          <Property Name="mod_usr" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mod_date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="FranchiseNames" Relationship="Self.FK__Franchise__Franc__2003926C" FromRole="Franchise" ToRole="FranchiseName" />
+          <NavigationProperty Name="FranchiseSportTypes" Relationship="Self.FK__Franchise__Franc__20C2AC7B" FromRole="Franchise" ToRole="FranchiseSportType" />
+          <NavigationProperty Name="FranchisePositions" Relationship="Self.FK__Franchise__Franc__20F7B6A5" FromRole="Franchise" ToRole="FranchisePosition" />
+          <NavigationProperty Name="FranchiseTeams" Relationship="Self.FK__Franchise__franc__4905A7FF" FromRole="Franchise" ToRole="FranchiseTeam" />
+          <NavigationProperty Name="FranchiseOwner" Relationship="Self.FK__Franchise__owner__64ADC274" FromRole="Franchise" ToRole="FranchiseOwner" />
+          <NavigationProperty Name="SportType" Relationship="Self.FK__Franchise__Sport__1B3EDD4F" FromRole="Franchise" ToRole="SportType" />
+        </EntityType>
+        <EntityType Name="FranchiseName">
+          <Key>
+            <PropertyRef Name="FranchiseNameId" />
+          </Key>
+          <Property Name="FranchiseNameId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FranchiseId" Type="Int32" Nullable="false" />
+          <Property Name="Region" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="StartDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDt" Type="DateTime" Precision="3" />
+          <Property Name="mod_usr" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mod_date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Franchise" Relationship="Self.FK__Franchise__Franc__2003926C" FromRole="FranchiseName" ToRole="Franchise" />
+        </EntityType>
+        <EntityType Name="FranchiseOwner">
+          <Key>
+            <PropertyRef Name="OwnerId" />
+          </Key>
+          <Property Name="OwnerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Prefix" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Middle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="StartDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDt" Type="DateTime" Precision="3" />
+          <Property Name="mod_usr" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mod_date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Franchises" Relationship="Self.FK__Franchise__owner__64ADC274" FromRole="FranchiseOwner" ToRole="Franchise" />
+        </EntityType>
+        <EntityType Name="FranchisePosition">
+          <Key>
+            <PropertyRef Name="FranchisePositionId" />
+          </Key>
+          <Property Name="FranchisePositionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FranchiseId" Type="Int32" Nullable="false" />
+          <Property Name="PersonId" Type="Int32" Nullable="false" />
+          <Property Name="PositionCodeId" Type="Int32" Nullable="false" />
+          <Property Name="StartDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDt" Type="DateTime" Precision="3" />
+          <Property Name="mod_usr" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mod_date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Franchise" Relationship="Self.FK__Franchise__Franc__20F7B6A5" FromRole="FranchisePosition" ToRole="Franchise" />
+          <NavigationProperty Name="Person" Relationship="Self.FK__Franchise__Perso__79DDE984" FromRole="FranchisePosition" ToRole="Person" />
+          <NavigationProperty Name="PositionCode" Relationship="Self.FK__Franchise__Posit__7AD20DBD" FromRole="FranchisePosition" ToRole="PositionCode" />
+        </EntityType>
+        <EntityType Name="FranchiseSportType">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FranchiseId" Type="Int32" Nullable="false" />
+          <Property Name="SportTypeCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="StartDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDt" Type="DateTime" Precision="3" />
+          <Property Name="mod_usr" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mod_date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Franchise" Relationship="Self.FK__Franchise__Franc__20C2AC7B" FromRole="FranchiseSportType" ToRole="Franchise" />
+          <NavigationProperty Name="SportType" Relationship="Self.FK__Franchise__Sport__21B6D0B4" FromRole="FranchiseSportType" ToRole="SportType" />
+        </EntityType>
+        <EntityType Name="FranchiseTeam">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="seasonid" Type="Int32" Nullable="false" />
+          <Property Name="franchiseid" Type="Int32" Nullable="false" />
+          <Property Name="div_cd" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="StartDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDt" Type="DateTime" Precision="3" />
+          <Property Name="mod_user" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="mod_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Franchise" Relationship="Self.FK__Franchise__franc__4905A7FF" FromRole="FranchiseTeam" ToRole="Franchise" />
+          <NavigationProperty Name="Season" Relationship="Self.FK__Franchise__seaso__49F9CC38" FromRole="FranchiseTeam" ToRole="Season" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="Personid" />
+          </Key>
+          <Property Name="Personid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CommonName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Suffix" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="BirthDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="mod_usr" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mod_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DOD" Type="DateTime" Precision="3" />
+          <Property Name="SportTypeGroupCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="StartDt" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="FranchisePositions" Relationship="Self.FK__Franchise__Perso__79DDE984" FromRole="Person" ToRole="FranchisePosition" />
+          <NavigationProperty Name="SportTypeGroup" Relationship="Self.FK__Person__SportTyp__298CFCA6" FromRole="Person" ToRole="SportTypeGroup" />
+        </EntityType>
+        <EntityType Name="PositionCode">
+          <Key>
+            <PropertyRef Name="PositionCodeId" />
+          </Key>
+          <Property Name="PositionCodeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PositionCode1" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PositionDescrip" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SportTypeCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="StartDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDt" Type="DateTime" Precision="3" />
+          <Property Name="mod_usr" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mod_date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="FranchisePositions" Relationship="Self.FK__Franchise__Posit__7AD20DBD" FromRole="PositionCode" ToRole="FranchisePosition" />
+          <NavigationProperty Name="SportType" Relationship="Self.FK__PositionC__Sport__760D58A0" FromRole="PositionCode" ToRole="SportType" />
+        </EntityType>
+        <EntityType Name="Season">
+          <Key>
+            <PropertyRef Name="seasonid" />
+          </Key>
+          <Property Name="seasonid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SportTypeCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="startdate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="mod_user" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mod_date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="FranchiseTeams" Relationship="Self.FK__Franchise__seaso__49F9CC38" FromRole="Season" ToRole="FranchiseTeam" />
+          <NavigationProperty Name="SportType" Relationship="Self.FK__Season__SportTyp__27D9BE5E" FromRole="Season" ToRole="SportType" />
+        </EntityType>
+        <EntityType Name="SportType">
+          <Key>
+            <PropertyRef Name="SportTypeCode" />
+          </Key>
+          <Property Name="SportTypeCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SportTypeGroupCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SportTypeDescrip" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SeasonStartMonth" Type="Int32" Nullable="false" />
+          <Property Name="mod_user" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mod_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SportTypeShortName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SportStartYear" Type="Int32" />
+          <Property Name="ParentTypeCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="SportEndYear" Type="Int32" />
+          <NavigationProperty Name="Franchises" Relationship="Self.FK__Franchise__Sport__1B3EDD4F" FromRole="SportType" ToRole="Franchise" />
+          <NavigationProperty Name="FranchiseSportTypes" Relationship="Self.FK__Franchise__Sport__21B6D0B4" FromRole="SportType" ToRole="FranchiseSportType" />
+          <NavigationProperty Name="PositionCodes" Relationship="Self.FK__PositionC__Sport__760D58A0" FromRole="SportType" ToRole="PositionCode" />
+          <NavigationProperty Name="Seasons" Relationship="Self.FK__Season__SportTyp__27D9BE5E" FromRole="SportType" ToRole="Season" />
+          <NavigationProperty Name="SportTypeGroup" Relationship="Self.FK__SportType__Sport__1BFDF75E" FromRole="SportType" ToRole="SportTypeGroup" />
+        </EntityType>
+        <EntityType Name="SportTypeGroup">
+          <Key>
+            <PropertyRef Name="SportTypeGroupCode" />
+          </Key>
+          <Property Name="SportTypeGroupCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SportTypeGroupDescrip" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mod_user" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mod_date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="People" Relationship="Self.FK__Person__SportTyp__298CFCA6" FromRole="SportTypeGroup" ToRole="Person" />
+          <NavigationProperty Name="SportTypes" Relationship="Self.FK__SportType__Sport__1BFDF75E" FromRole="SportTypeGroup" ToRole="SportType" />
+          <NavigationProperty Name="StadiumSurfaceCodes" Relationship="Self.FK__StadiumSu__Sport__07F6FEB1" FromRole="SportTypeGroup" ToRole="StadiumSurfaceCode" />
+        </EntityType>
+        <EntityType Name="Stadium">
+          <Key>
+            <PropertyRef Name="StadiumId" />
+          </Key>
+          <Property Name="StadiumId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AddressId" Type="Int32" Nullable="false" />
+          <Property Name="StadiumName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StadiumSurfaceCodeId" Type="Int32" Nullable="false" />
+          <Property Name="StartDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDt" Type="DateTime" Precision="3" />
+          <Property Name="mod_usr" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="mod_date" Type="DateTime" Precision="3" />
+          <Property Name="SportTypeGroupCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="StadiumSurfaceCode" Relationship="Self.FK__Stadium__Stadium__593C0FC8" FromRole="Stadium" ToRole="StadiumSurfaceCode" />
+        </EntityType>
+        <EntityType Name="StadiumSurfaceCode">
+          <Key>
+            <PropertyRef Name="StadiumSurfaceCodeId" />
+          </Key>
+          <Property Name="StadiumSurfaceCodeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StadiumSurfaceCode1" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SurfaceName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="StartDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDt" Type="DateTime" Precision="3" />
+          <Property Name="mod_usr" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mod_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SportTypeGroupCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SportTypeGroup" Relationship="Self.FK__StadiumSu__Sport__07F6FEB1" FromRole="StadiumSurfaceCode" ToRole="SportTypeGroup" />
+          <NavigationProperty Name="Stadia" Relationship="Self.FK__Stadium__Stadium__593C0FC8" FromRole="StadiumSurfaceCode" ToRole="Stadium" />
+        </EntityType>
+        <EntityType Name="StateCode">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StateCode1" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mod_usr" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mod_date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <Association Name="FK__Franchise__Franc__2003926C">
+          <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
+          <End Role="FranchiseName" Type="Self.FranchiseName" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Franchise">
+              <PropertyRef Name="FranchiseId" />
+            </Principal>
+            <Dependent Role="FranchiseName">
+              <PropertyRef Name="FranchiseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Franchise__Franc__20C2AC7B">
+          <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
+          <End Role="FranchiseSportType" Type="Self.FranchiseSportType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Franchise">
+              <PropertyRef Name="FranchiseId" />
+            </Principal>
+            <Dependent Role="FranchiseSportType">
+              <PropertyRef Name="FranchiseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Franchise__Franc__20F7B6A5">
+          <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
+          <End Role="FranchisePosition" Type="Self.FranchisePosition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Franchise">
+              <PropertyRef Name="FranchiseId" />
+            </Principal>
+            <Dependent Role="FranchisePosition">
+              <PropertyRef Name="FranchiseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Franchise__franc__4905A7FF">
+          <End Role="Franchise" Type="Self.Franchise" Multiplicity="1" />
+          <End Role="FranchiseTeam" Type="Self.FranchiseTeam" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Franchise">
+              <PropertyRef Name="FranchiseId" />
+            </Principal>
+            <Dependent Role="FranchiseTeam">
+              <PropertyRef Name="franchiseid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Franchise__owner__64ADC274">
+          <End Role="FranchiseOwner" Type="Self.FranchiseOwner" Multiplicity="1" />
+          <End Role="Franchise" Type="Self.Franchise" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FranchiseOwner">
+              <PropertyRef Name="OwnerId" />
+            </Principal>
+            <Dependent Role="Franchise">
+              <PropertyRef Name="ownerid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Franchise__Sport__1B3EDD4F">
+          <End Role="SportType" Type="Self.SportType" Multiplicity="0..1" />
+          <End Role="Franchise" Type="Self.Franchise" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SportType">
+              <PropertyRef Name="SportTypeCode" />
+            </Principal>
+            <Dependent Role="Franchise">
+              <PropertyRef Name="SportTypeCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Franchise__Perso__79DDE984">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="FranchisePosition" Type="Self.FranchisePosition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Personid" />
+            </Principal>
+            <Dependent Role="FranchisePosition">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Franchise__Posit__7AD20DBD">
+          <End Role="PositionCode" Type="Self.PositionCode" Multiplicity="1" />
+          <End Role="FranchisePosition" Type="Self.FranchisePosition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PositionCode">
+              <PropertyRef Name="PositionCodeId" />
+            </Principal>
+            <Dependent Role="FranchisePosition">
+              <PropertyRef Name="PositionCodeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Franchise__Sport__21B6D0B4">
+          <End Role="SportType" Type="Self.SportType" Multiplicity="1" />
+          <End Role="FranchiseSportType" Type="Self.FranchiseSportType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SportType">
+              <PropertyRef Name="SportTypeCode" />
+            </Principal>
+            <Dependent Role="FranchiseSportType">
+              <PropertyRef Name="SportTypeCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Franchise__seaso__49F9CC38">
+          <End Role="Season" Type="Self.Season" Multiplicity="1" />
+          <End Role="FranchiseTeam" Type="Self.FranchiseTeam" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Season">
+              <PropertyRef Name="seasonid" />
+            </Principal>
+            <Dependent Role="FranchiseTeam">
+              <PropertyRef Name="seasonid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Person__SportTyp__298CFCA6">
+          <End Role="SportTypeGroup" Type="Self.SportTypeGroup" Multiplicity="1" />
+          <End Role="Person" Type="Self.Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SportTypeGroup">
+              <PropertyRef Name="SportTypeGroupCode" />
+            </Principal>
+            <Dependent Role="Person">
+              <PropertyRef Name="SportTypeGroupCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PositionC__Sport__760D58A0">
+          <End Role="SportType" Type="Self.SportType" Multiplicity="1" />
+          <End Role="PositionCode" Type="Self.PositionCode" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SportType">
+              <PropertyRef Name="SportTypeCode" />
+            </Principal>
+            <Dependent Role="PositionCode">
+              <PropertyRef Name="SportTypeCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Season__SportTyp__27D9BE5E">
+          <End Role="SportType" Type="Self.SportType" Multiplicity="1" />
+          <End Role="Season" Type="Self.Season" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SportType">
+              <PropertyRef Name="SportTypeCode" />
+            </Principal>
+            <Dependent Role="Season">
+              <PropertyRef Name="SportTypeCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SportType__Sport__1BFDF75E">
+          <End Role="SportTypeGroup" Type="Self.SportTypeGroup" Multiplicity="1" />
+          <End Role="SportType" Type="Self.SportType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SportTypeGroup">
+              <PropertyRef Name="SportTypeGroupCode" />
+            </Principal>
+            <Dependent Role="SportType">
+              <PropertyRef Name="SportTypeGroupCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StadiumSu__Sport__07F6FEB1">
+          <End Role="SportTypeGroup" Type="Self.SportTypeGroup" Multiplicity="0..1" />
+          <End Role="StadiumSurfaceCode" Type="Self.StadiumSurfaceCode" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SportTypeGroup">
+              <PropertyRef Name="SportTypeGroupCode" />
+            </Principal>
+            <Dependent Role="StadiumSurfaceCode">
+              <PropertyRef Name="SportTypeGroupCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Stadium__Stadium__593C0FC8">
+          <End Role="StadiumSurfaceCode" Type="Self.StadiumSurfaceCode" Multiplicity="1" />
+          <End Role="Stadium" Type="Self.Stadium" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StadiumSurfaceCode">
+              <PropertyRef Name="StadiumSurfaceCodeId" />
+            </Principal>
+            <Dependent Role="Stadium">
+              <PropertyRef Name="StadiumSurfaceCodeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GameStatEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Franchises" EntityType="Self.Franchise" />
+          <EntitySet Name="FranchiseNames" EntityType="Self.FranchiseName" />
+          <EntitySet Name="FranchiseOwners" EntityType="Self.FranchiseOwner" />
+          <EntitySet Name="FranchisePositions" EntityType="Self.FranchisePosition" />
+          <EntitySet Name="FranchiseSportTypes" EntityType="Self.FranchiseSportType" />
+          <EntitySet Name="FranchiseTeams" EntityType="Self.FranchiseTeam" />
+          <EntitySet Name="People" EntityType="Self.Person" />
+          <EntitySet Name="PositionCodes" EntityType="Self.PositionCode" />
+          <EntitySet Name="Seasons" EntityType="Self.Season" />
+          <EntitySet Name="SportTypes" EntityType="Self.SportType" />
+          <EntitySet Name="SportTypeGroups" EntityType="Self.SportTypeGroup" />
+          <EntitySet Name="Stadia" EntityType="Self.Stadium" />
+          <EntitySet Name="StadiumSurfaceCodes" EntityType="Self.StadiumSurfaceCode" />
+          <EntitySet Name="StateCodes" EntityType="Self.StateCode" />
+          <AssociationSet Name="FK__Franchise__Franc__2003926C" Association="Self.FK__Franchise__Franc__2003926C">
+            <End Role="Franchise" EntitySet="Franchises" />
+            <End Role="FranchiseName" EntitySet="FranchiseNames" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Franchise__Franc__20C2AC7B" Association="Self.FK__Franchise__Franc__20C2AC7B">
+            <End Role="Franchise" EntitySet="Franchises" />
+            <End Role="FranchiseSportType" EntitySet="FranchiseSportTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Franchise__Franc__20F7B6A5" Association="Self.FK__Franchise__Franc__20F7B6A5">
+            <End Role="Franchise" EntitySet="Franchises" />
+            <End Role="FranchisePosition" EntitySet="FranchisePositions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Franchise__franc__4905A7FF" Association="Self.FK__Franchise__franc__4905A7FF">
+            <End Role="Franchise" EntitySet="Franchises" />
+            <End Role="FranchiseTeam" EntitySet="FranchiseTeams" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Franchise__owner__64ADC274" Association="Self.FK__Franchise__owner__64ADC274">
+            <End Role="FranchiseOwner" EntitySet="FranchiseOwners" />
+            <End Role="Franchise" EntitySet="Franchises" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Franchise__Sport__1B3EDD4F" Association="Self.FK__Franchise__Sport__1B3EDD4F">
+            <End Role="SportType" EntitySet="SportTypes" />
+            <End Role="Franchise" EntitySet="Franchises" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Franchise__Perso__79DDE984" Association="Self.FK__Franchise__Perso__79DDE984">
+            <End Role="Person" EntitySet="People" />
+            <End Role="FranchisePosition" EntitySet="FranchisePositions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Franchise__Posit__7AD20DBD" Association="Self.FK__Franchise__Posit__7AD20DBD">
+            <End Role="PositionCode" EntitySet="PositionCodes" />
+            <End Role="FranchisePosition" EntitySet="FranchisePositions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Franchise__Sport__21B6D0B4" Association="Self.FK__Franchise__Sport__21B6D0B4">
+            <End Role="SportType" EntitySet="SportTypes" />
+            <End Role="FranchiseSportType" EntitySet="FranchiseSportTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Franchise__seaso__49F9CC38" Association="Self.FK__Franchise__seaso__49F9CC38">
+            <End Role="Season" EntitySet="Seasons" />
+            <End Role="FranchiseTeam" EntitySet="FranchiseTeams" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Person__SportTyp__298CFCA6" Association="Self.FK__Person__SportTyp__298CFCA6">
+            <End Role="SportTypeGroup" EntitySet="SportTypeGroups" />
+            <End Role="Person" EntitySet="People" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PositionC__Sport__760D58A0" Association="Self.FK__PositionC__Sport__760D58A0">
+            <End Role="SportType" EntitySet="SportTypes" />
+            <End Role="PositionCode" EntitySet="PositionCodes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Season__SportTyp__27D9BE5E" Association="Self.FK__Season__SportTyp__27D9BE5E">
+            <End Role="SportType" EntitySet="SportTypes" />
+            <End Role="Season" EntitySet="Seasons" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SportType__Sport__1BFDF75E" Association="Self.FK__SportType__Sport__1BFDF75E">
+            <End Role="SportTypeGroup" EntitySet="SportTypeGroups" />
+            <End Role="SportType" EntitySet="SportTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StadiumSu__Sport__07F6FEB1" Association="Self.FK__StadiumSu__Sport__07F6FEB1">
+            <End Role="SportTypeGroup" EntitySet="SportTypeGroups" />
+            <End Role="StadiumSurfaceCode" EntitySet="StadiumSurfaceCodes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Stadium__Stadium__593C0FC8" Association="Self.FK__Stadium__Stadium__593C0FC8">
+            <End Role="StadiumSurfaceCode" EntitySet="StadiumSurfaceCodes" />
+            <End Role="Stadium" EntitySet="Stadia" />
+          </AssociationSet>
+          <EntitySet Name="AllTeamRecordsPerctGamesBehindViews" EntityType="SportsModel.AllTeamRecordsPerctGamesBehindView" />
+          <EntitySet Name="AllTeamRecordsPerctViews" EntityType="SportsModel.AllTeamRecordsPerctView" />
+          <EntitySet Name="AllGamesViews" EntityType="SportsModel.AllGamesView" />
+        </EntityContainer>
+        <EntityType Name="AllTeamRecordsPerctGamesBehindView">
+          <Key>
+            <PropertyRef Name="seasonid" />
+            <PropertyRef Name="SportTypeCode" />
+            <PropertyRef Name="conference" />
+            <PropertyRef Name="division" />
+            <PropertyRef Name="franchiseid" />
+            <PropertyRef Name="team" />
+          </Key>
+          <Property Name="seasonid" Type="Int32" Nullable="false" />
+          <Property Name="SportTypeCode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="SportYear" Type="Int32" />
+          <Property Name="conference" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="division" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="franchiseid" Type="Int32" Nullable="false" />
+          <Property Name="team" Type="String" Nullable="false" MaxLength="201" FixedLength="false" Unicode="false" />
+          <Property Name="WINS" Type="Int32" />
+          <Property Name="LOSES" Type="Int32" />
+          <Property Name="TIES" Type="Int32" />
+          <Property Name="PERCT" Type="Double" />
+          <Property Name="HOMEREC" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="AWAYREC" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="GB" Type="Decimal" Precision="4" Scale="1" />
+        </EntityType>
+        <EntityType Name="AllTeamRecordsPerctView">
+          <Key>
+            <PropertyRef Name="seasonid" />
+            <PropertyRef Name="SportTypeCode" />
+            <PropertyRef Name="conference" />
+            <PropertyRef Name="division" />
+            <PropertyRef Name="franchiseid" />
+            <PropertyRef Name="Team" />
+          </Key>
+          <Property Name="seasonid" Type="Int32" Nullable="false" />
+          <Property Name="SportTypeCode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="SportYear" Type="Int32" />
+          <Property Name="conference" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="division" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="franchiseid" Type="Int32" Nullable="false" />
+          <Property Name="Team" Type="String" Nullable="false" MaxLength="201" FixedLength="false" Unicode="false" />
+          <Property Name="WINS" Type="Int32" />
+          <Property Name="LOSES" Type="Int32" />
+          <Property Name="TIES" Type="Int32" />
+          <Property Name="PERCT" Type="Double" />
+          <Property Name="HOMEREC" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="AWAYREC" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="AllGamesView">
+          <Key>
+            <PropertyRef Name="SeasonId" />
+            <PropertyRef Name="SportTypeCode" />
+            <PropertyRef Name="SportStartDate" />
+            <PropertyRef Name="GameId" />
+            <PropertyRef Name="HomeFranchiseId" />
+            <PropertyRef Name="HomeTeam" />
+            <PropertyRef Name="VisitorFranchiseId" />
+            <PropertyRef Name="VisitorTeam" />
+            <PropertyRef Name="GameDtm" />
+            <PropertyRef Name="Preseason" />
+          </Key>
+          <Property Name="SeasonId" Type="Int32" Nullable="false" />
+          <Property Name="SportTypeCode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="SportStartDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="GameId" Type="Int32" Nullable="false" />
+          <Property Name="HomeFranchiseId" Type="Int32" Nullable="false" />
+          <Property Name="HomeTeam" Type="String" Nullable="false" MaxLength="201" FixedLength="false" Unicode="false" />
+          <Property Name="HomeScore" Type="Int32" />
+          <Property Name="VisitorFranchiseId" Type="Int32" Nullable="false" />
+          <Property Name="VisitorTeam" Type="String" Nullable="false" MaxLength="201" FixedLength="false" Unicode="false" />
+          <Property Name="VisitorScore" Type="Int32" />
+          <Property Name="GameDtm" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Preseason" Type="Boolean" Nullable="false" />
+          <Property Name="PlayoffId" Type="Int32" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SportsModelStoreContainer" CdmEntityContainer="GameStatEntities">
+          <EntitySetMapping Name="Franchises">
+            <EntityTypeMapping TypeName="SportsModel.Franchise">
+              <MappingFragment StoreEntitySet="Franchise">
+                <ScalarProperty Name="FranchiseId" ColumnName="FranchiseId" />
+                <ScalarProperty Name="ownerid" ColumnName="ownerid" />
+                <ScalarProperty Name="SportTypeCode" ColumnName="SportTypeCode" />
+                <ScalarProperty Name="StartDt" ColumnName="StartDt" />
+                <ScalarProperty Name="EndDt" ColumnName="EndDt" />
+                <ScalarProperty Name="mod_usr" ColumnName="mod_usr" />
+                <ScalarProperty Name="mod_date" ColumnName="mod_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FranchiseNames">
+            <EntityTypeMapping TypeName="SportsModel.FranchiseName">
+              <MappingFragment StoreEntitySet="FranchiseName">
+                <ScalarProperty Name="FranchiseNameId" ColumnName="FranchiseNameId" />
+                <ScalarProperty Name="FranchiseId" ColumnName="FranchiseId" />
+                <ScalarProperty Name="Region" ColumnName="Region" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="StartDt" ColumnName="StartDt" />
+                <ScalarProperty Name="EndDt" ColumnName="EndDt" />
+                <ScalarProperty Name="mod_usr" ColumnName="mod_usr" />
+                <ScalarProperty Name="mod_date" ColumnName="mod_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FranchiseOwners">
+            <EntityTypeMapping TypeName="SportsModel.FranchiseOwner">
+              <MappingFragment StoreEntitySet="FranchiseOwner">
+                <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
+                <ScalarProperty Name="Prefix" ColumnName="Prefix" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Middle" ColumnName="Middle" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="StartDt" ColumnName="StartDt" />
+                <ScalarProperty Name="EndDt" ColumnName="EndDt" />
+                <ScalarProperty Name="mod_usr" ColumnName="mod_usr" />
+                <ScalarProperty Name="mod_date" ColumnName="mod_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FranchisePositions">
+            <EntityTypeMapping TypeName="SportsModel.FranchisePosition">
+              <MappingFragment StoreEntitySet="FranchisePosition">
+                <ScalarProperty Name="FranchisePositionId" ColumnName="FranchisePositionId" />
+                <ScalarProperty Name="FranchiseId" ColumnName="FranchiseId" />
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+                <ScalarProperty Name="PositionCodeId" ColumnName="PositionCodeId" />
+                <ScalarProperty Name="StartDt" ColumnName="StartDt" />
+                <ScalarProperty Name="EndDt" ColumnName="EndDt" />
+                <ScalarProperty Name="mod_usr" ColumnName="mod_usr" />
+                <ScalarProperty Name="mod_date" ColumnName="mod_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FranchiseSportTypes">
+            <EntityTypeMapping TypeName="SportsModel.FranchiseSportType">
+              <MappingFragment StoreEntitySet="FranchiseSportType">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="FranchiseId" ColumnName="FranchiseId" />
+                <ScalarProperty Name="SportTypeCode" ColumnName="SportTypeCode" />
+                <ScalarProperty Name="StartDt" ColumnName="StartDt" />
+                <ScalarProperty Name="EndDt" ColumnName="EndDt" />
+                <ScalarProperty Name="mod_usr" ColumnName="mod_usr" />
+                <ScalarProperty Name="mod_date" ColumnName="mod_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FranchiseTeams">
+            <EntityTypeMapping TypeName="SportsModel.FranchiseTeam">
+              <MappingFragment StoreEntitySet="FranchiseTeam">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="seasonid" ColumnName="seasonid" />
+                <ScalarProperty Name="franchiseid" ColumnName="franchiseid" />
+                <ScalarProperty Name="div_cd" ColumnName="div_cd" />
+                <ScalarProperty Name="StartDt" ColumnName="StartDt" />
+                <ScalarProperty Name="EndDt" ColumnName="EndDt" />
+                <ScalarProperty Name="mod_user" ColumnName="mod_user" />
+                <ScalarProperty Name="mod_date" ColumnName="mod_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="People">
+            <EntityTypeMapping TypeName="SportsModel.Person">
+              <MappingFragment StoreEntitySet="Person">
+                <ScalarProperty Name="Personid" ColumnName="Personid" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="CommonName" ColumnName="CommonName" />
+                <ScalarProperty Name="Suffix" ColumnName="Suffix" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="mod_usr" ColumnName="mod_usr" />
+                <ScalarProperty Name="mod_date" ColumnName="mod_date" />
+                <ScalarProperty Name="DOD" ColumnName="DOD" />
+                <ScalarProperty Name="SportTypeGroupCode" ColumnName="SportTypeGroupCode" />
+                <ScalarProperty Name="StartDt" ColumnName="StartDt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PositionCodes">
+            <EntityTypeMapping TypeName="SportsModel.PositionCode">
+              <MappingFragment StoreEntitySet="PositionCode">
+                <ScalarProperty Name="PositionCodeId" ColumnName="PositionCodeId" />
+                <ScalarProperty Name="PositionCode1" ColumnName="PositionCode" />
+                <ScalarProperty Name="PositionDescrip" ColumnName="PositionDescrip" />
+                <ScalarProperty Name="SportTypeCode" ColumnName="SportTypeCode" />
+                <ScalarProperty Name="StartDt" ColumnName="StartDt" />
+                <ScalarProperty Name="EndDt" ColumnName="EndDt" />
+                <ScalarProperty Name="mod_usr" ColumnName="mod_usr" />
+                <ScalarProperty Name="mod_date" ColumnName="mod_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Seasons">
+            <EntityTypeMapping TypeName="SportsModel.Season">
+              <MappingFragment StoreEntitySet="Season">
+                <ScalarProperty Name="seasonid" ColumnName="seasonid" />
+                <ScalarProperty Name="SportTypeCode" ColumnName="SportTypeCode" />
+                <ScalarProperty Name="startdate" ColumnName="startdate" />
+                <ScalarProperty Name="mod_user" ColumnName="mod_user" />
+                <ScalarProperty Name="mod_date" ColumnName="mod_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SportTypes">
+            <EntityTypeMapping TypeName="SportsModel.SportType">
+              <MappingFragment StoreEntitySet="SportType">
+                <ScalarProperty Name="SportTypeCode" ColumnName="SportTypeCode" />
+                <ScalarProperty Name="SportTypeGroupCode" ColumnName="SportTypeGroupCode" />
+                <ScalarProperty Name="SportTypeDescrip" ColumnName="SportTypeDescrip" />
+                <ScalarProperty Name="SeasonStartMonth" ColumnName="SeasonStartMonth" />
+                <ScalarProperty Name="mod_user" ColumnName="mod_user" />
+                <ScalarProperty Name="mod_date" ColumnName="mod_date" />
+                <ScalarProperty Name="SportTypeShortName" ColumnName="SportTypeShortName" />
+                <ScalarProperty Name="SportStartYear" ColumnName="SportStartYear" />
+                <ScalarProperty Name="ParentTypeCode" ColumnName="ParentTypeCode" />
+                <ScalarProperty Name="SportEndYear" ColumnName="SportEndYear" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SportTypeGroups">
+            <EntityTypeMapping TypeName="SportsModel.SportTypeGroup">
+              <MappingFragment StoreEntitySet="SportTypeGroup">
+                <ScalarProperty Name="SportTypeGroupCode" ColumnName="SportTypeGroupCode" />
+                <ScalarProperty Name="SportTypeGroupDescrip" ColumnName="SportTypeGroupDescrip" />
+                <ScalarProperty Name="mod_user" ColumnName="mod_user" />
+                <ScalarProperty Name="mod_date" ColumnName="mod_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stadia">
+            <EntityTypeMapping TypeName="SportsModel.Stadium">
+              <MappingFragment StoreEntitySet="Stadium">
+                <ScalarProperty Name="StadiumId" ColumnName="StadiumId" />
+                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
+                <ScalarProperty Name="StadiumName" ColumnName="StadiumName" />
+                <ScalarProperty Name="StadiumSurfaceCodeId" ColumnName="StadiumSurfaceCodeId" />
+                <ScalarProperty Name="StartDt" ColumnName="StartDt" />
+                <ScalarProperty Name="EndDt" ColumnName="EndDt" />
+                <ScalarProperty Name="mod_usr" ColumnName="mod_usr" />
+                <ScalarProperty Name="mod_date" ColumnName="mod_date" />
+                <ScalarProperty Name="SportTypeGroupCode" ColumnName="SportTypeGroupCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StadiumSurfaceCodes">
+            <EntityTypeMapping TypeName="SportsModel.StadiumSurfaceCode">
+              <MappingFragment StoreEntitySet="StadiumSurfaceCode">
+                <ScalarProperty Name="StadiumSurfaceCodeId" ColumnName="StadiumSurfaceCodeId" />
+                <ScalarProperty Name="StadiumSurfaceCode1" ColumnName="StadiumSurfaceCode" />
+                <ScalarProperty Name="SurfaceName" ColumnName="SurfaceName" />
+                <ScalarProperty Name="StartDt" ColumnName="StartDt" />
+                <ScalarProperty Name="EndDt" ColumnName="EndDt" />
+                <ScalarProperty Name="mod_usr" ColumnName="mod_usr" />
+                <ScalarProperty Name="mod_date" ColumnName="mod_date" />
+                <ScalarProperty Name="SportTypeGroupCode" ColumnName="SportTypeGroupCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StateCodes">
+            <EntityTypeMapping TypeName="SportsModel.StateCode">
+              <MappingFragment StoreEntitySet="StateCode">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="StateCode1" ColumnName="StateCode" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="mod_usr" ColumnName="mod_usr" />
+                <ScalarProperty Name="mod_date" ColumnName="mod_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AllTeamRecordsPerctGamesBehindViews">
+            <EntityTypeMapping TypeName="SportsModel.AllTeamRecordsPerctGamesBehindView">
+              <MappingFragment StoreEntitySet="AllTeamRecordsPerctGamesBehindView">
+                <ScalarProperty Name="GB" ColumnName="GB" />
+                <ScalarProperty Name="AWAYREC" ColumnName="AWAYREC" />
+                <ScalarProperty Name="HOMEREC" ColumnName="HOMEREC" />
+                <ScalarProperty Name="PERCT" ColumnName="PERCT" />
+                <ScalarProperty Name="TIES" ColumnName="TIES" />
+                <ScalarProperty Name="LOSES" ColumnName="LOSES" />
+                <ScalarProperty Name="WINS" ColumnName="WINS" />
+                <ScalarProperty Name="team" ColumnName="team" />
+                <ScalarProperty Name="franchiseid" ColumnName="franchiseid" />
+                <ScalarProperty Name="division" ColumnName="division" />
+                <ScalarProperty Name="conference" ColumnName="conference" />
+                <ScalarProperty Name="SportYear" ColumnName="SportYear" />
+                <ScalarProperty Name="SportTypeCode" ColumnName="SportTypeCode" />
+                <ScalarProperty Name="seasonid" ColumnName="seasonid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AllTeamRecordsPerctViews">
+            <EntityTypeMapping TypeName="SportsModel.AllTeamRecordsPerctView">
+              <MappingFragment StoreEntitySet="AllTeamRecordsPerctView">
+                <ScalarProperty Name="AWAYREC" ColumnName="AWAYREC" />
+                <ScalarProperty Name="HOMEREC" ColumnName="HOMEREC" />
+                <ScalarProperty Name="PERCT" ColumnName="PERCT" />
+                <ScalarProperty Name="TIES" ColumnName="TIES" />
+                <ScalarProperty Name="LOSES" ColumnName="LOSES" />
+                <ScalarProperty Name="WINS" ColumnName="WINS" />
+                <ScalarProperty Name="Team" ColumnName="Team" />
+                <ScalarProperty Name="franchiseid" ColumnName="franchiseid" />
+                <ScalarProperty Name="division" ColumnName="division" />
+                <ScalarProperty Name="conference" ColumnName="conference" />
+                <ScalarProperty Name="SportYear" ColumnName="SportYear" />
+                <ScalarProperty Name="SportTypeCode" ColumnName="SportTypeCode" />
+                <ScalarProperty Name="seasonid" ColumnName="seasonid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AllGamesViews">
+            <EntityTypeMapping TypeName="SportsModel.AllGamesView">
+              <MappingFragment StoreEntitySet="AllGamesView">
+                <ScalarProperty Name="PlayoffId" ColumnName="PlayoffId" />
+                <ScalarProperty Name="Preseason" ColumnName="Preseason" />
+                <ScalarProperty Name="GameDtm" ColumnName="GameDtm" />
+                <ScalarProperty Name="VisitorScore" ColumnName="VisitorScore" />
+                <ScalarProperty Name="VisitorTeam" ColumnName="VisitorTeam" />
+                <ScalarProperty Name="VisitorFranchiseId" ColumnName="VisitorFranchiseId" />
+                <ScalarProperty Name="HomeScore" ColumnName="HomeScore" />
+                <ScalarProperty Name="HomeTeam" ColumnName="HomeTeam" />
+                <ScalarProperty Name="HomeFranchiseId" ColumnName="HomeFranchiseId" />
+                <ScalarProperty Name="GameId" ColumnName="GameId" />
+                <ScalarProperty Name="SportStartDate" ColumnName="SportStartDate" />
+                <ScalarProperty Name="SportTypeCode" ColumnName="SportTypeCode" />
+                <ScalarProperty Name="SeasonId" ColumnName="SeasonId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,521 @@
+﻿@model PhasGameStats.ViewModels.SeasonVM
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = @Model.Year + " " + @Model.SportType;
+}
+
+
+
+
+@*<body>*@
+    <div class="container">
+        @*@{ 
+            Model.
+        }*@
+        @*<h3 style="text-align:center;" class="mt-3"><em>@Model.Year @Model.SportType Statistics</em></h3>*@
+
+        @Html.HiddenFor(m => Model.SportType)
+
+        <div class="row">
+
+            <div class="col-6 mt-3 table-responsive" style="border:solid; text-align:center;">
+
+                <div class="row">
+                    <div class="col-1">
+                        <button class="refreshMain" id="ConfDiv" style="font-size:10px; text-align:left; width:40px;">Conf</button>
+                    </div>
+                    <div class="col-5 pl-5">
+                        @*<b style="color:maroon; font-size:12px;">Standings thru @Model.MaxGameDate.Substring(0, 10)</b>*@
+                    </div>
+                    <div class="col-3 conferences" style="display:none;">
+                        <button class="refreshMain" style="font-size:10px; text-align:left;">Eastern</button>
+                    </div>
+                    <div class="col-3 conferences" style="display:none;">
+                        <button class="refreshMain" style="font-size:10px; text-align:left;">Western</button>
+                    </div>
+                    <div class="col-6 divisions">
+                        <button class="refreshMain" style="font-size:10px; text-align:left; width:40px;">&nbsp;Cntrl</button>
+                        <button class="refreshMain" style="font-size:10px; text-align:left; width:40px;">&nbsp;SEst</button>
+                        <button class="refreshMain" style="font-size:10px; text-align:left; width:40px;">NWst</button>
+                        <button class="refreshMain" style="font-size:10px; text-align:left; width:40px;">&nbsp;Pacf</button>
+                        <button class="refreshMain" style="font-size:10px; text-align:left; width:40px;">&nbsp;SWst</button>
+                    </div>
+                </div>
+
+                <table id="ByDivisionData" class="table table-sm table-hover">
+                    <thead>
+                        <tr style="color:maroon; font-size:12px; text-align:center;">
+                            <th id="HdrTeam" style="width:150px;">Team</th>
+                            <th id="HdrWins" style="width:10px;">Wins</th>
+                            <th id="HdrLoses" style="width:10px;">Loses</th>
+                            <th id="HdrPrcnt" style="width:10px;">%</th>
+                            <th id="HdrGB" style="width:40px;">GB</th>
+                            <th id="HdrHome" style="width:20px;">Home</th>
+                            <th id="HdrAway" style="width:20px;">Away</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Division.ToList())
+                        {
+                            <tr id="standingsrow" style="color:maroon; font-size:12px;">
+                                <td class="standingsFranchise" style="display:none;">@item.FranchiseId</td>
+                                <td style="text-align:left;width:150px;">@item.Team</td>
+                                <td style="width:10px; text-align:center;">@item.Wins</td>
+                                <td style="width:10px; text-align:center;">@item.Loses</td>
+                                <td style="width:10px; text-align:center;">@item.percent</td>
+                                <td style="width:40px; text-align:center;">@item.GB</td>
+                                <td style="width:20px; text-align:center;">@item.HomeRec</td>
+                                <td style="width:20px; text-align:center;">@item.AwayRec</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-6 mt-3 table-responsive" style="border: solid; text-align: center; height: 230px;">
+
+                <b style="color: maroon; font-size: 12px;">Season Games</b>
+
+                <table id="RecentGamesData" class="table table-sm table-hover">
+                    <thead>
+                        <tr id="recentgamesheader" style="color: maroon; font-size: 12px;">
+                            <th style="width:10px;">Date</th>
+                            <th style="width:130px; text-align:center;">Home</th>
+                            <th style="width:10px;">Score</th>
+                            <th style="width:10px;"></th>
+                            <th style="width:130px; text-align:center;">Visitor</th>
+                            <th style="width:10px;">Score</th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody class="tbodyrecentgames"><tr></tr></tbody>
+
+            </table>
+
+        </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-6 mt-3 table-responsive" style="border: solid; text-align: center;">
+
+                <b style="color:maroon; font-size:12px;">Recent Team vs. Team</b>
+
+                <table id="RecentTeamvsTeam" class="table table-sm table-hover">
+                    <thead>
+                        <tr id="recentteamvsteamheader" style="color:maroon; font-size:12px;">
+                            <th style="width:10px;">Date</th>
+                            <th style="width:130px; text-align:center;">Home</th>
+                            <th style="width:20px;">Score</th>
+                            <th style="width:20px;"></th>
+                            <th style="width:130px;">Visitor</th>
+                            <th style="width:40px;">Score</th>
+                        </tr>
+                    </thead>
+                    <tbody class="teamvsteamtbl"><tr></tr></tbody>
+                </table>
+            </div>
+
+
+
+            <div class="col-6 mt-3 table-responsive" style="border:solid; text-align:center;">
+
+                <b id="recentTeamVTeamHomeAwayheader" style="color:maroon; font-size:12px;"></b>
+
+                <table id="TeamvsTeamHomeAwaytbl" class="table table-sm table-hover">
+                    <thead>
+                        <tr id="recentTeamVTeamHomeAwayhead" style="color:maroon; font-size:12px;">
+                            <th style="width:10px;">Date</th>
+                            <th style="width:130px;">Home</th>
+                            <th style="width:20px;">Score</th>
+                            <th style="width:20px;"></th>
+                            <th style="width:130px;">Visitor</th>
+                            <th style="width:40px;">Score</th>
+                        </tr>
+                    </thead>
+                    <tbody class="v"><tr></tr></tbody>
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div>
+        <br /><br />
+        @Html.ActionLink("<-- Back to List", "Dashboard", "Home")
+    </div>
+@*</body>*@
+
+
+<style type="text/css">
+    tr.row {
+        background-color: lightblue !important; /* Adding !important forces the browser to overwrite the default style applied by Bootstrap */
+    }
+</style>
+
+<script type="text/javascript">
+
+    //window.onload = function () {
+    //    if (window.jQuery) {
+    //        alert('jQuery is loaded');
+    //    }
+    //    else {
+    //        alert('jQuery is not loaded');
+    //    }
+    //};
+
+    //$('#ByDivisionData tbody tr').hover(function () {
+    //    $(this).css("background-color", "yellow");
+    //}, function () {
+    //    $(this).css("background-color", "pink");
+    //});
+
+    $(document).ready(function () {
+
+        let SeasonID = '@Session["SeasonID"]';
+        let SelectedYear = '@Session["SelectedYear"]';
+        let SportType = $('#SportType').val();
+
+        $(document).on('click', '#ByDivisionData tbody tr', function () {
+
+            //if ($(".conferences").css('display') !== 'none') {
+            //    alert("Hello");
+            //}
+
+            $(this).addClass('bg-warning').siblings().removeClass('bg-warning');
+
+            let SelectedFranchise = $('.standingsFranchise', this).html();
+            let SelectedSeasonId = SeasonID;
+
+            $("#RecentGamesData tbody").empty();
+            $("#RecentTeamvsTeam tbody").empty();
+            $("#TeamvsTeamHomeAwaytbl tbody").empty();
+            $("#recentTeamVTeamHomeAwayheader").empty();
+
+            let tbodyrecentgames = $('#RecentGamesData tbody');
+            let cntr = 0;
+            let maxRows = 0;
+
+            //maxRows = $('.conferences').css('display') == 'none' ? 5 : 15;
+            maxRows = 100;
+
+            //if $(".divisions")
+
+            $.ajax({
+                url: '/Stats/FetchRecentGamesByTeam',
+                data: { seasonId: SelectedSeasonId, franchiseId: SelectedFranchise },
+                dataType: 'json',
+                method: 'GET',
+                success: function (data) {
+
+                    $.each(data, function () {
+                        $.each(this, function (k, v) {
+
+                            if (cntr === 0) { $(tbodyrecentgames).html(''); }
+
+                            if (v.HomeTeamScore > v.VisitorTeamScore) {
+                                tbodyrecentgames.append("<tr style='font-size:12px; color:maroon;'>" +
+                                    "<td id='ht" + cntr + "' style='display:none;'>" + v.HomeFranchiseId + "</td>" +
+                                    "<td id='vt" + cntr + "' style='display:none;'>" + v.VisitorFranchiseId + "</td>" +
+                                    "<td style='text-align:left; width:10px; font-size:12px;'><i><b>" + v.gameday + "</b></i></td>" +
+                                    "<td class='table-success' style='width:130px; text-align:left;'>" + v.HomeTeam + "</td>" +
+                                    "<td class='table-success' style='text-align:right; width:10px;'>" + v.HomeTeamScore + "</td>" +
+                                    "<td style='width:10px;'></td>" +
+                                    "<td style='width:130px; text-align:left;'>" + v.VisitorTeam + "</td>" +
+                                    "<td style='text-align:right; width:10px;'>" + v.VisitorTeamScore + "</td>" +
+                                    "</tr > ");
+                            } else {
+                                tbodyrecentgames.append("<tr style='font-size:12px; color:maroon;'>" +
+                                    "<td id='ht" + cntr + "' style='display:none;'>" + v.HomeFranchiseId + "</td>" +
+                                    "<td id='vt" + cntr + "' style='display:none;'>" + v.VisitorFranchiseId + "</td>" +
+                                    "<td style='text-align:left; width:10px; font-size:12px;'><i><b>" + v.gameday + "</b></i></td>" +
+                                    "<td style='width:130px; text-align:left;'>" + v.HomeTeam + "</td>" +
+                                    "<td style='text-align:right; width:10px;'>" + v.HomeTeamScore + "</td>" +
+                                    "<td style='width:10px;'></td>" +
+                                    "<td class='table-success' style='width:130px; text-align:left;'>" + v.VisitorTeam + "</td>" +
+                                    "<td class='table-success' style='text-align:right; width:10px;'>" + v.VisitorTeamScore + "</td>" +
+                                    "</tr > ");
+                            }
+
+                            cntr += 1;
+                            if (cntr === maxRows) { return false; }
+                        });
+                    });
+                },
+                error: function (e) {
+                    alert(e.message);
+                    console.log(e.message);
+                }
+            });
+        });
+
+
+        $('.tbodyrecentgames').on('click', 'tr', function (e) {
+            
+            $(this).addClass('bg-warning').siblings().removeClass('bg-warning');
+            $('#RecentGamesData tbody tr td').removeClass('table-success');
+
+            let rowIndex = $(this).index('#RecentGamesData tbody tr');
+
+            let homerow = '#ht' + rowIndex;
+            let visitorrow = '#vt' + rowIndex;
+
+            let SelectedSeasonId = SeasonID;
+            let SelectedSportType = SportType;
+            let SelectedHomeFranchise = $(homerow, this).html();
+            let SelectedVisitorFranchise = $(visitorrow, this).html();
+
+            $("#TeamvsTeamHomeAwaytbl tbody").empty();
+
+            let teamvsteamtable = $('#RecentTeamvsTeam tbody');
+            cntr = 0;
+
+            maxRows = $('.conferences').css('display') == 'none' ? 25 : 15;
+
+            $.ajax({
+                url: '/Stats/FetchRecentTeamVTeamGames',
+                data: { seasonId: SelectedSeasonId, sportType: SelectedSportType, homeTeam: SelectedHomeFranchise, visitorTeam: SelectedVisitorFranchise },
+                dataType: 'json',
+                method: 'GET',
+                success: function (data) {
+                    
+                    $.each(data, function () {
+                        $.each(this, function (k, v) {
+                            
+                            if (cntr === 0) { $(teamvsteamtable).html(''); }
+
+                            if (v.HomeTeamScore > v.VisitorTeamScore) {
+                                teamvsteamtable.append("<tr style='font-size:12px; color:maroon; text-align:left;'>" +
+                                    "<td id='ht" + cntr + "' style='display:none;'>" + v.HomeFranchiseId + "</td>" +
+                                    "<td id='vt" + cntr + "' style='display:none;'>" + v.VisitorFranchiseId + "</td>" +
+                                    "<td style='text-align:left; width:10px; font-size:12px;'><i><b>" + v.gameday + "</b></i></td>" +
+                                    "<td class='table-success'>" + v.HomeTeam + "</td>" +
+                                    "<td class='table-success'>" + v.HomeTeamScore + "</td>" +
+                                    "<td></td> <td>" + v.VisitorTeam + "</td>" +
+                                    "<td>" + v.VisitorTeamScore + "</td></tr > ");
+                            } else {
+                                teamvsteamtable.append("<tr style='text-align:left; font-size:12px; color:maroon;'>" +
+                                    "<td id='ht" + cntr + "' style='display:none;'>" + v.HomeFranchiseId + "</td>" +
+                                    "<td id='vt" + cntr + "' style='display:none;'>" + v.VisitorFranchiseId + "</td>" +
+                                    "<td style='text-align:left; width:10px; font-size:12px;'><i><b>" + v.gameday + "</b></i></td>" +
+                                    "<td>" + v.HomeTeam + "</td>" +
+                                    "<td>" + v.HomeTeamScore + "</td>" +
+                                    "<td></td> <td class='table-success'>" + v.VisitorTeam + "</td>" +
+                                    "<td class='table-success'>" + v.VisitorTeamScore + "</td></tr > ");
+                            }
+
+                            cntr += 1;
+                            if (cntr === 5) { return false; }
+                        });
+                    });
+                },
+                error: function (e) {
+                    alert(e.message);
+                    console.log(e.message);
+                }
+
+            });
+            
+        });
+
+
+        $('.teamvsteamtbl').on("click", "tr", function (e) {
+
+            $(this).addClass('bg-warning').siblings().removeClass('bg-warning');
+            $('#RecentTeamvsTeam tbody tr td').removeClass('table-success');
+
+            var rowIndex = $(this).index('#RecentTeamvsTeam tbody tr');
+
+            var homerow = '#ht' + rowIndex;
+            var visitorrow = '#vt' + rowIndex;
+
+            let SelectedSeasonId = SeasonID;
+            let SelectedSportType = SportType;
+            let SelectedHomeFranchise = $(homerow, this).html();
+            let SelectedVisitorFranchise = $(visitorrow, this).html();
+
+            var teamvsteamhomeawaytbl = $('#TeamvsTeamHomeAwaytbl tbody');
+            cntr = 0;
+
+            $.ajax({
+                url: '/Stats/FetchRecentTeamVTeamGamesHomeAway',
+                data: { seasonId: SelectedSeasonId, sportType: SelectedSportType, homeTeam: SelectedHomeFranchise, visitorTeam: SelectedVisitorFranchise },
+                dataType: 'json',
+                method: 'GET',
+                success: function (data) {
+                    $.each(data, function () {
+                        $.each(this, function (k, v) {
+
+                            if (cntr === 0) {
+                                var header = 'Home: ' + v.HomeTeam;
+                                $(teamvsteamhomeawaytbl).html('');
+                                $('#recentTeamVTeamHomeAwayheader').text(header);
+                                $('#recentTeamVTeamHomeAwayheader').append('     ');
+                                $('#recentTeamVTeamHomeAwayheader').append('Visitor: ' + v.VisitorTeam);
+                            }
+
+                            if (v.HomeTeamScore > v.VisitorTeamScore) {
+                                teamvsteamhomeawaytbl.append("<tr style='font-size:12px; color:maroon; text-align:left;'>" +
+                                    "<td id='ht" + cntr + "' style='display:none;'>" + v.HomeFranchiseId + "</td>" +
+                                    "<td id='vt" + cntr + "' style='display:none;'>" + v.VisitorFranchiseId + "</td>" +
+                                    "<td style='text-align:left; width:10px; font-size:12px;'><i><b>" + v.gameday + "</b></i></td>" +
+                                    "<td class='table-success'>" + v.HomeTeam + "</td>" +
+                                    "<td class='table-success'>" + v.HomeTeamScore + "</td>" +
+                                    "<td></td> <td>" + v.VisitorTeam + "</td>" +
+                                    "<td>" + v.VisitorTeamScore + "</td></tr > ");
+                            } else {
+                                teamvsteamhomeawaytbl.append("<tr style='text-align:left; font-size:12px; color:maroon;'>" +
+                                    "<td id='ht" + cntr + "' style='display:none;'>" + v.HomeFranchiseId + "</td>" +
+                                    "<td id='vt" + cntr + "' style='display:none;'>" + v.VisitorFranchiseId + "</td>" +
+                                    "<td style='text-align:left; width:10px; font-size:12px;'><i><b>" + v.gameday + "</b></i></td>" +
+                                    "<td>" + v.HomeTeam + "</td>" +
+                                    "<td>" + v.HomeTeamScore + "</td>" +
+                                    "<td></td> <td class='table-success'>" + v.VisitorTeam + "</td>" +
+                                    "<td class='table-success'>" + v.VisitorTeamScore + "</td></tr > ");
+                            }
+
+                            cntr += 1;
+                            if (cntr === 5) { return false; }
+                        });
+                    });
+                },
+                error: function (e) {
+                    alert(e.message);
+                    console.log(e.message);
+                }
+            });
+
+        });
+
+
+        $('#ConfDiv').click(function () {
+            if ($(this).html() === 'Conf') {
+                $(this).html('&nbsp;&nbsp;Div');
+                $('.divisions').hide();
+                $('.conferences').show();
+            } else {
+                $(this).html('Conf');
+                $('.divisions').show();
+                $('.conferences').hide();
+            }
+        });
+
+
+
+        $('.refreshMain').click(function () {
+            var conf = 'ETC';
+            var div = '';
+
+            if ($(this).html() === 'Conf') {
+                div = 'BEA';
+            } else if ($(this).html() === 'Western') {
+                conf = 'WTC';
+                div = '';
+            } else if ($(this).html() === '&nbsp;Cntrl') {
+                $(this).html('&nbsp;Altc');
+                div = 'BEC';
+            } else if ($(this).html() === '&nbsp;Altc') {
+                $(this).html('&nbsp;Cntrl');
+                div = 'BEA';
+            } else if ($(this).html() === '&nbsp;SEst') {
+                div = 'BES';
+            } else if ($(this).html() === 'NWst') {
+                conf = 'WTC';
+                div = 'BWN';
+            } else if ($(this).html() === '&nbsp;Pacf') {
+                conf = 'WTC';
+                div = 'BWP';
+            } else if ($(this).html() === '&nbsp;SWst') {
+                conf = 'WTC';
+                div = 'BWS';
+            }
+
+            $('#RecentGamesData tbody').empty();
+            $('#RecentTeamvsTeam tbody').empty();
+            $('#ConfDivTeam tbody').empty();
+            $('#TeamvsTeamHomeAwaytbl tbody').empty();
+
+            var cntr = 0;
+            $.ajax({
+                url: '/Stats/FetchConfDivision',
+                data: {
+                    sportyear: SelectedYear,
+                    sportcode: SelectedSportsType,
+                    confcode: conf,
+                    divcode: div
+                },
+                dataType: 'json',
+                method: 'GET',
+                success: function (data) {
+                    console.log(data);
+                    $.each(data, function () {
+                        $.each(this, function (k, v) {
+                            //alert('here');
+                            cntr += 1;
+                            if (cntr === 1) { $('#ByDivisionData tbody').html(''); }
+
+                            $('#ByDivisionData tbody').append("<tr id='standingsrow' style='color:maroon; font-size:12px;'>" +
+                                "<td class='standingsFranchise' style='display:none;'>" + v.TeamCd + "</td>" +
+                                "<td style='width:150px; text-align:left;'>" + v.Team + "</td>" +
+                                "<td style='width:10px; text-align:center;'>" + v.Wins + "</td>" +
+                                "<td style='width:10px; text-align:center;'>" + v.Loses + "</td>" +
+                                "<td style='width:10px; text-align:center;'>" + v.percent + "</td>" +
+                                "<td style='width:40px; text-align:center;'>" + v.GB + "</td>" +
+                                "<td style='width:20px; text-align:center;'>" + v.HomeRec + "</td>" +
+                                "<td style='width:20px; text-align:center;'>" + v.AwayRec + "</td>" +
+                                "</tr>");
+                        });
+                    });
+                },
+                error: function (e) {
+                    alert(e.message);
+                    console.log(e.message);
+                }
+            });
+
+        });
+
+    });
+
+
+
+</script>
+
+@*//var row = table.insertRow(1);
+    //var cell1 = row.insertCell(0);
+    //var cell2 = row.insertCell(1);
+    //var cell3 = row.insertCell(2);
+    //var cell4 = row.insertCell(3);
+    ////alert(v.HomeTeam);
+    //cell1.innerHTML = v.HomeTeam;
+    //cell2.innerHTML = v.HomeTeamScore;
+    //cell3.innerHTML = v.VisitorTeam;
+    //cell4.innerHTML = v.VisitorTeamScore;*@
+
+
+@*//event = event || window.event;                  //for IE8 backward compatibility
+    //var target = event.target || event.srcElement;  //for IE8 backward compatibility
+
+    //while (target && target.nodeName !== 'TR') {
+    //    target = target.parentElement;
+    //}
+
+    //$(".table > tbody > tr").click(function (e) {
+    //    alert('Here???');
+    //    $(this).addClass("selected").siblings().removeClass("selected");
+    //    alert($("td").html());
+    //    alert($("td").text());
+    //});
+
+    //var cells = target.cells; //cells collection
+
+    //cells.each(function (item) {
+    //    alert(item);
+    //});
+
+    //var TeamCode = cells[0].innerHTML;
+    //alert(TeamCode);*@

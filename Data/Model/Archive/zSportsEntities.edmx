@@ -1,0 +1,666 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SportsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Conference">
+          <Key>
+            <PropertyRef Name="conf_cd" />
+          </Key>
+          <Property Name="conf_cd" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="sportstypecd" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="conf_name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="mod_user" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="mod_date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Division">
+          <Key>
+            <PropertyRef Name="div_cd" />
+          </Key>
+          <Property Name="div_cd" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="conf_cd" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="div_name" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="mod_user" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="mod_date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Game">
+          <Key>
+            <PropertyRef Name="gameid" />
+          </Key>
+          <Property Name="gameid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="seasonid" Type="int" Nullable="false" />
+          <Property Name="preseason" Type="bit" Nullable="false" />
+          <Property Name="overtime" Type="int" />
+          <Property Name="gamedtm" Type="datetime" Nullable="false" />
+          <Property Name="gamestatus" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="visitor" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="hometeam" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="visitorscore" Type="int" Nullable="false" />
+          <Property Name="hometeamscore" Type="int" Nullable="false" />
+          <Property Name="mod_user" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="mod_date" Type="datetime" Nullable="false" />
+          <Property Name="playoffrnd" Type="int" />
+        </EntityType>
+        <EntityType Name="GameStatus">
+          <Key>
+            <PropertyRef Name="gstatus_cd" />
+          </Key>
+          <Property Name="gstatus_cd" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="status" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="mod_user" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="mod_date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Season">
+          <Key>
+            <PropertyRef Name="seasonid" />
+          </Key>
+          <Property Name="seasonid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sportstypecd" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="startdate" Type="datetime" Nullable="false" />
+          <Property Name="mod_user" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="mod_date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SportsType">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sportstypecd" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="sportstypedesc" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="seasonstartmonth" Type="int" Nullable="false" />
+          <Property Name="mod_user" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="mod_date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Team">
+          <Key>
+            <PropertyRef Name="team_cd" />
+          </Key>
+          <Property Name="team_cd" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="div_cd" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="teamname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="city" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="startdate" Type="datetime" Nullable="false" />
+          <Property Name="enddate" Type="datetime" />
+          <Property Name="mod_user" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="mod_date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Sports.dbo.ViewAllGames' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ViewAllGames">
+          <Key>
+            <PropertyRef Name="gameid" />
+            <PropertyRef Name="preseason" />
+            <PropertyRef Name="hometeamscore" />
+            <PropertyRef Name="visitorscore" />
+            <PropertyRef Name="gamedtm" />
+          </Key>
+          <Property Name="seasonid" Type="int" />
+          <Property Name="sportstypecd" Type="varchar" MaxLength="3" />
+          <Property Name="gameid" Type="int" Nullable="false" />
+          <Property Name="preseason" Type="bit" Nullable="false" />
+          <Property Name="HomeTeamCode" Type="varchar" MaxLength="3" />
+          <Property Name="HomeTeam" Type="varchar" MaxLength="101" />
+          <Property Name="hometeamscore" Type="int" Nullable="false" />
+          <Property Name="VisitorTeamCode" Type="varchar" MaxLength="3" />
+          <Property Name="VisitorTeam" Type="varchar" MaxLength="101" />
+          <Property Name="visitorscore" Type="int" Nullable="false" />
+          <Property Name="gamedtm" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Sports.dbo.ViewAllTeamRecordsPerct' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ViewAllTeamRecordsPerct">
+          <Key>
+            <PropertyRef Name="seasonid" />
+            <PropertyRef Name="conf_cd" />
+            <PropertyRef Name="div_cd" />
+            <PropertyRef Name="team_cd" />
+            <PropertyRef Name="team" />
+            <PropertyRef Name="preseason" />
+          </Key>
+          <Property Name="seasonid" Type="int" Nullable="false" />
+          <Property Name="conf_cd" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="div_cd" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="team_cd" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="team" Type="varchar" MaxLength="101" Nullable="false" />
+          <Property Name="WINS" Type="int" />
+          <Property Name="LOSES" Type="int" />
+          <Property Name="PERCT" Type="float" />
+          <Property Name="HOMEREC" Type="varchar" MaxLength="9" />
+          <Property Name="AWAYREC" Type="varchar" MaxLength="9" />
+          <Property Name="preseason" Type="bit" Nullable="false" />
+          <Property Name="MaxGameDtm" Type="datetime" />
+          <Property Name="PlayOffRnd" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Sports.dbo.ViewAllTeamRecordsPerctGamesBehind' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ViewAllTeamRecordsPerctGamesBehind">
+          <Key>
+            <PropertyRef Name="seasonid" />
+            <PropertyRef Name="conf_cd" />
+            <PropertyRef Name="div_cd" />
+            <PropertyRef Name="team_cd" />
+            <PropertyRef Name="team" />
+            <PropertyRef Name="preseason" />
+          </Key>
+          <Property Name="seasonid" Type="int" Nullable="false" />
+          <Property Name="conf_cd" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="div_cd" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="team_cd" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="team" Type="varchar" MaxLength="101" Nullable="false" />
+          <Property Name="WINS" Type="int" />
+          <Property Name="LOSES" Type="int" />
+          <Property Name="PERCT" Type="float" />
+          <Property Name="HOMEREC" Type="varchar" MaxLength="9" />
+          <Property Name="AWAYREC" Type="varchar" MaxLength="9" />
+          <Property Name="preseason" Type="bit" Nullable="false" />
+          <Property Name="MaxGameDtm" Type="datetime" />
+          <Property Name="GB" Type="decimal" Precision="4" Scale="1" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK__Conferenc__sport__7C3A67EB' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK__Conferenc__sport__7C3A67EB" />-->
+        <Association Name="FK__Division__conf_c__000AF8CF">
+          <End Role="Conference" Type="Self.Conference" Multiplicity="1" />
+          <End Role="Division" Type="Self.Division" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Conference">
+              <PropertyRef Name="conf_cd" />
+            </Principal>
+            <Dependent Role="Division">
+              <PropertyRef Name="conf_cd" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Game__seasonid__10416098">
+          <End Role="Season" Type="Self.Season" Multiplicity="1" />
+          <End Role="Game" Type="Self.Game" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Season">
+              <PropertyRef Name="seasonid" />
+            </Principal>
+            <Dependent Role="Game">
+              <PropertyRef Name="seasonid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK__Season__sportsty__07AC1A97' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK__Season__sportsty__07AC1A97" />-->
+        <Association Name="FK__Team__div_cd__03DB89B3">
+          <End Role="Division" Type="Self.Division" Multiplicity="1" />
+          <End Role="Team" Type="Self.Team" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Division">
+              <PropertyRef Name="div_cd" />
+            </Principal>
+            <Dependent Role="Team">
+              <PropertyRef Name="div_cd" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="GetGamesBehind" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="decimal">
+          <Parameter Name="pSeasonId" Type="int" Mode="In" />
+          <Parameter Name="pTeamCd" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="SportsModelStoreContainer">
+          <EntitySet Name="Conference" EntityType="Self.Conference" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Division" EntityType="Self.Division" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Game" EntityType="Self.Game" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GameStatus" EntityType="Self.GameStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Season" EntityType="Self.Season" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SportsType" EntityType="Self.SportsType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Team" EntityType="Self.Team" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ViewAllGames" EntityType="Self.ViewAllGames" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ViewAllGames].[seasonid] AS [seasonid], 
+    [ViewAllGames].[sportstypecd] AS [sportstypecd], 
+    [ViewAllGames].[gameid] AS [gameid], 
+    [ViewAllGames].[preseason] AS [preseason], 
+    [ViewAllGames].[HomeTeamCode] AS [HomeTeamCode], 
+    [ViewAllGames].[HomeTeam] AS [HomeTeam], 
+    [ViewAllGames].[hometeamscore] AS [hometeamscore], 
+    [ViewAllGames].[VisitorTeamCode] AS [VisitorTeamCode], 
+    [ViewAllGames].[VisitorTeam] AS [VisitorTeam], 
+    [ViewAllGames].[visitorscore] AS [visitorscore], 
+    [ViewAllGames].[gamedtm] AS [gamedtm]
+    FROM [dbo].[ViewAllGames] AS [ViewAllGames]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ViewAllTeamRecordsPerct" EntityType="Self.ViewAllTeamRecordsPerct" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ViewAllTeamRecordsPerct].[seasonid] AS [seasonid], 
+    [ViewAllTeamRecordsPerct].[conf_cd] AS [conf_cd], 
+    [ViewAllTeamRecordsPerct].[div_cd] AS [div_cd], 
+    [ViewAllTeamRecordsPerct].[team_cd] AS [team_cd], 
+    [ViewAllTeamRecordsPerct].[team] AS [team], 
+    [ViewAllTeamRecordsPerct].[WINS] AS [WINS], 
+    [ViewAllTeamRecordsPerct].[LOSES] AS [LOSES], 
+    [ViewAllTeamRecordsPerct].[PERCT] AS [PERCT], 
+    [ViewAllTeamRecordsPerct].[HOMEREC] AS [HOMEREC], 
+    [ViewAllTeamRecordsPerct].[AWAYREC] AS [AWAYREC], 
+    [ViewAllTeamRecordsPerct].[preseason] AS [preseason], 
+    [ViewAllTeamRecordsPerct].[MaxGameDtm] AS [MaxGameDtm], 
+    [ViewAllTeamRecordsPerct].[PlayOffRnd] AS [PlayOffRnd]
+    FROM [dbo].[ViewAllTeamRecordsPerct] AS [ViewAllTeamRecordsPerct]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ViewAllTeamRecordsPerctGamesBehind" EntityType="Self.ViewAllTeamRecordsPerctGamesBehind" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ViewAllTeamRecordsPerctGamesBehind].[seasonid] AS [seasonid], 
+    [ViewAllTeamRecordsPerctGamesBehind].[conf_cd] AS [conf_cd], 
+    [ViewAllTeamRecordsPerctGamesBehind].[div_cd] AS [div_cd], 
+    [ViewAllTeamRecordsPerctGamesBehind].[team_cd] AS [team_cd], 
+    [ViewAllTeamRecordsPerctGamesBehind].[team] AS [team], 
+    [ViewAllTeamRecordsPerctGamesBehind].[WINS] AS [WINS], 
+    [ViewAllTeamRecordsPerctGamesBehind].[LOSES] AS [LOSES], 
+    [ViewAllTeamRecordsPerctGamesBehind].[PERCT] AS [PERCT], 
+    [ViewAllTeamRecordsPerctGamesBehind].[HOMEREC] AS [HOMEREC], 
+    [ViewAllTeamRecordsPerctGamesBehind].[AWAYREC] AS [AWAYREC], 
+    [ViewAllTeamRecordsPerctGamesBehind].[preseason] AS [preseason], 
+    [ViewAllTeamRecordsPerctGamesBehind].[MaxGameDtm] AS [MaxGameDtm], 
+    [ViewAllTeamRecordsPerctGamesBehind].[GB] AS [GB]
+    FROM [dbo].[ViewAllTeamRecordsPerctGamesBehind] AS [ViewAllTeamRecordsPerctGamesBehind]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__Division__conf_c__000AF8CF" Association="Self.FK__Division__conf_c__000AF8CF">
+            <End Role="Conference" EntitySet="Conference" />
+            <End Role="Division" EntitySet="Division" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Game__seasonid__10416098" Association="Self.FK__Game__seasonid__10416098">
+            <End Role="Season" EntitySet="Season" />
+            <End Role="Game" EntitySet="Game" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Team__div_cd__03DB89B3" Association="Self.FK__Team__div_cd__03DB89B3">
+            <End Role="Division" EntitySet="Division" />
+            <End Role="Team" EntitySet="Team" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SportsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Conference">
+          <Key>
+            <PropertyRef Name="conf_cd" />
+          </Key>
+          <Property Name="conf_cd" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sportstypecd" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="conf_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mod_user" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mod_date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Divisions" Relationship="Self.FK__Division__conf_c__000AF8CF" FromRole="Conference" ToRole="Division" />
+        </EntityType>
+        <EntityType Name="Division">
+          <Key>
+            <PropertyRef Name="div_cd" />
+          </Key>
+          <Property Name="div_cd" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="conf_cd" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="div_name" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mod_user" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mod_date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Conference" Relationship="Self.FK__Division__conf_c__000AF8CF" FromRole="Division" ToRole="Conference" />
+          <NavigationProperty Name="Teams" Relationship="Self.FK__Team__div_cd__03DB89B3" FromRole="Division" ToRole="Team" />
+        </EntityType>
+        <EntityType Name="Game">
+          <Key>
+            <PropertyRef Name="gameid" />
+          </Key>
+          <Property Name="gameid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="seasonid" Type="Int32" Nullable="false" />
+          <Property Name="preseason" Type="Boolean" Nullable="false" />
+          <Property Name="overtime" Type="Int32" />
+          <Property Name="gamedtm" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="gamestatus" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="visitor" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="hometeam" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="visitorscore" Type="Int32" Nullable="false" />
+          <Property Name="hometeamscore" Type="Int32" Nullable="false" />
+          <Property Name="mod_user" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mod_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="playoffrnd" Type="Int32" />
+          <NavigationProperty Name="Season" Relationship="Self.FK__Game__seasonid__10416098" FromRole="Game" ToRole="Season" />
+        </EntityType>
+        <EntityType Name="GameStatu">
+          <Key>
+            <PropertyRef Name="gstatus_cd" />
+          </Key>
+          <Property Name="gstatus_cd" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="status" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mod_user" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mod_date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Season">
+          <Key>
+            <PropertyRef Name="seasonid" />
+          </Key>
+          <Property Name="seasonid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sportstypecd" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="startdate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="mod_user" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mod_date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Games" Relationship="Self.FK__Game__seasonid__10416098" FromRole="Season" ToRole="Game" />
+        </EntityType>
+        <EntityType Name="SportsType">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sportstypecd" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sportstypedesc" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="seasonstartmonth" Type="Int32" Nullable="false" />
+          <Property Name="mod_user" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mod_date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Team">
+          <Key>
+            <PropertyRef Name="team_cd" />
+          </Key>
+          <Property Name="team_cd" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="div_cd" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="teamname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="city" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="startdate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="enddate" Type="DateTime" Precision="3" />
+          <Property Name="mod_user" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mod_date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Division" Relationship="Self.FK__Team__div_cd__03DB89B3" FromRole="Team" ToRole="Division" />
+        </EntityType>
+        <EntityType Name="ViewAllGame">
+          <Key>
+            <PropertyRef Name="gameid" />
+            <PropertyRef Name="preseason" />
+            <PropertyRef Name="hometeamscore" />
+            <PropertyRef Name="visitorscore" />
+            <PropertyRef Name="gamedtm" />
+          </Key>
+          <Property Name="seasonid" Type="Int32" />
+          <Property Name="sportstypecd" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="gameid" Type="Int32" Nullable="false" />
+          <Property Name="preseason" Type="Boolean" Nullable="false" />
+          <Property Name="HomeTeamCode" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="HomeTeam" Type="String" MaxLength="101" FixedLength="false" Unicode="false" />
+          <Property Name="hometeamscore" Type="Int32" Nullable="false" />
+          <Property Name="VisitorTeamCode" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="VisitorTeam" Type="String" MaxLength="101" FixedLength="false" Unicode="false" />
+          <Property Name="visitorscore" Type="Int32" Nullable="false" />
+          <Property Name="gamedtm" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="ViewAllTeamRecordsPerct">
+          <Key>
+            <PropertyRef Name="seasonid" />
+            <PropertyRef Name="conf_cd" />
+            <PropertyRef Name="div_cd" />
+            <PropertyRef Name="team_cd" />
+            <PropertyRef Name="team" />
+            <PropertyRef Name="preseason" />
+          </Key>
+          <Property Name="seasonid" Type="Int32" Nullable="false" />
+          <Property Name="conf_cd" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="div_cd" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="team_cd" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="team" Type="String" MaxLength="101" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="WINS" Type="Int32" />
+          <Property Name="LOSES" Type="Int32" />
+          <Property Name="PERCT" Type="Double" />
+          <Property Name="HOMEREC" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="AWAYREC" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="preseason" Type="Boolean" Nullable="false" />
+          <Property Name="MaxGameDtm" Type="DateTime" Precision="3" />
+          <Property Name="PlayOffRnd" Type="Int32" />
+        </EntityType>
+        <EntityType Name="ViewAllTeamRecordsPerctGamesBehind">
+          <Key>
+            <PropertyRef Name="seasonid" />
+            <PropertyRef Name="conf_cd" />
+            <PropertyRef Name="div_cd" />
+            <PropertyRef Name="team_cd" />
+            <PropertyRef Name="team" />
+            <PropertyRef Name="preseason" />
+          </Key>
+          <Property Name="seasonid" Type="Int32" Nullable="false" />
+          <Property Name="conf_cd" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="div_cd" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="team_cd" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="team" Type="String" MaxLength="101" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="WINS" Type="Int32" />
+          <Property Name="LOSES" Type="Int32" />
+          <Property Name="PERCT" Type="Double" />
+          <Property Name="HOMEREC" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="AWAYREC" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="preseason" Type="Boolean" Nullable="false" />
+          <Property Name="MaxGameDtm" Type="DateTime" Precision="3" />
+          <Property Name="GB" Type="Decimal" Precision="4" Scale="1" />
+        </EntityType>
+        <Association Name="FK__Division__conf_c__000AF8CF">
+          <End Role="Conference" Type="Self.Conference" Multiplicity="1" />
+          <End Role="Division" Type="Self.Division" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Conference">
+              <PropertyRef Name="conf_cd" />
+            </Principal>
+            <Dependent Role="Division">
+              <PropertyRef Name="conf_cd" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Team__div_cd__03DB89B3">
+          <End Role="Division" Type="Self.Division" Multiplicity="1" />
+          <End Role="Team" Type="Self.Team" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Division">
+              <PropertyRef Name="div_cd" />
+            </Principal>
+            <Dependent Role="Team">
+              <PropertyRef Name="div_cd" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Game__seasonid__10416098">
+          <End Role="Season" Type="Self.Season" Multiplicity="1" />
+          <End Role="Game" Type="Self.Game" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Season">
+              <PropertyRef Name="seasonid" />
+            </Principal>
+            <Dependent Role="Game">
+              <PropertyRef Name="seasonid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SportsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Conferences" EntityType="Self.Conference" />
+          <EntitySet Name="Divisions" EntityType="Self.Division" />
+          <EntitySet Name="Games" EntityType="Self.Game" />
+          <EntitySet Name="GameStatus" EntityType="Self.GameStatu" />
+          <EntitySet Name="Seasons" EntityType="Self.Season" />
+          <EntitySet Name="SportsTypes" EntityType="Self.SportsType" />
+          <EntitySet Name="Teams" EntityType="Self.Team" />
+          <EntitySet Name="ViewAllGames" EntityType="Self.ViewAllGame" />
+          <EntitySet Name="ViewAllTeamRecordsPercts" EntityType="Self.ViewAllTeamRecordsPerct" />
+          <EntitySet Name="ViewAllTeamRecordsPerctGamesBehinds" EntityType="Self.ViewAllTeamRecordsPerctGamesBehind" />
+          <AssociationSet Name="FK__Division__conf_c__000AF8CF" Association="Self.FK__Division__conf_c__000AF8CF">
+            <End Role="Conference" EntitySet="Conferences" />
+            <End Role="Division" EntitySet="Divisions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Team__div_cd__03DB89B3" Association="Self.FK__Team__div_cd__03DB89B3">
+            <End Role="Division" EntitySet="Divisions" />
+            <End Role="Team" EntitySet="Teams" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Game__seasonid__10416098" Association="Self.FK__Game__seasonid__10416098">
+            <End Role="Season" EntitySet="Seasons" />
+            <End Role="Game" EntitySet="Games" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SportsModelStoreContainer" CdmEntityContainer="SportsEntities">
+          <EntitySetMapping Name="Conferences">
+            <EntityTypeMapping TypeName="SportsModel.Conference">
+              <MappingFragment StoreEntitySet="Conference">
+                <ScalarProperty Name="conf_cd" ColumnName="conf_cd" />
+                <ScalarProperty Name="sportstypecd" ColumnName="sportstypecd" />
+                <ScalarProperty Name="conf_name" ColumnName="conf_name" />
+                <ScalarProperty Name="mod_user" ColumnName="mod_user" />
+                <ScalarProperty Name="mod_date" ColumnName="mod_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Divisions">
+            <EntityTypeMapping TypeName="SportsModel.Division">
+              <MappingFragment StoreEntitySet="Division">
+                <ScalarProperty Name="div_cd" ColumnName="div_cd" />
+                <ScalarProperty Name="conf_cd" ColumnName="conf_cd" />
+                <ScalarProperty Name="div_name" ColumnName="div_name" />
+                <ScalarProperty Name="mod_user" ColumnName="mod_user" />
+                <ScalarProperty Name="mod_date" ColumnName="mod_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Games">
+            <EntityTypeMapping TypeName="SportsModel.Game">
+              <MappingFragment StoreEntitySet="Game">
+                <ScalarProperty Name="gameid" ColumnName="gameid" />
+                <ScalarProperty Name="seasonid" ColumnName="seasonid" />
+                <ScalarProperty Name="preseason" ColumnName="preseason" />
+                <ScalarProperty Name="overtime" ColumnName="overtime" />
+                <ScalarProperty Name="gamedtm" ColumnName="gamedtm" />
+                <ScalarProperty Name="gamestatus" ColumnName="gamestatus" />
+                <ScalarProperty Name="visitor" ColumnName="visitor" />
+                <ScalarProperty Name="hometeam" ColumnName="hometeam" />
+                <ScalarProperty Name="visitorscore" ColumnName="visitorscore" />
+                <ScalarProperty Name="hometeamscore" ColumnName="hometeamscore" />
+                <ScalarProperty Name="mod_user" ColumnName="mod_user" />
+                <ScalarProperty Name="mod_date" ColumnName="mod_date" />
+                <ScalarProperty Name="playoffrnd" ColumnName="playoffrnd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GameStatus">
+            <EntityTypeMapping TypeName="SportsModel.GameStatu">
+              <MappingFragment StoreEntitySet="GameStatus">
+                <ScalarProperty Name="gstatus_cd" ColumnName="gstatus_cd" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="mod_user" ColumnName="mod_user" />
+                <ScalarProperty Name="mod_date" ColumnName="mod_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Seasons">
+            <EntityTypeMapping TypeName="SportsModel.Season">
+              <MappingFragment StoreEntitySet="Season">
+                <ScalarProperty Name="seasonid" ColumnName="seasonid" />
+                <ScalarProperty Name="sportstypecd" ColumnName="sportstypecd" />
+                <ScalarProperty Name="startdate" ColumnName="startdate" />
+                <ScalarProperty Name="mod_user" ColumnName="mod_user" />
+                <ScalarProperty Name="mod_date" ColumnName="mod_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SportsTypes">
+            <EntityTypeMapping TypeName="SportsModel.SportsType">
+              <MappingFragment StoreEntitySet="SportsType">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="sportstypecd" ColumnName="sportstypecd" />
+                <ScalarProperty Name="sportstypedesc" ColumnName="sportstypedesc" />
+                <ScalarProperty Name="seasonstartmonth" ColumnName="seasonstartmonth" />
+                <ScalarProperty Name="mod_user" ColumnName="mod_user" />
+                <ScalarProperty Name="mod_date" ColumnName="mod_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teams">
+            <EntityTypeMapping TypeName="SportsModel.Team">
+              <MappingFragment StoreEntitySet="Team">
+                <ScalarProperty Name="team_cd" ColumnName="team_cd" />
+                <ScalarProperty Name="div_cd" ColumnName="div_cd" />
+                <ScalarProperty Name="teamname" ColumnName="teamname" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="startdate" ColumnName="startdate" />
+                <ScalarProperty Name="enddate" ColumnName="enddate" />
+                <ScalarProperty Name="mod_user" ColumnName="mod_user" />
+                <ScalarProperty Name="mod_date" ColumnName="mod_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ViewAllGames">
+            <EntityTypeMapping TypeName="SportsModel.ViewAllGame">
+              <MappingFragment StoreEntitySet="ViewAllGames">
+                <ScalarProperty Name="seasonid" ColumnName="seasonid" />
+                <ScalarProperty Name="sportstypecd" ColumnName="sportstypecd" />
+                <ScalarProperty Name="gameid" ColumnName="gameid" />
+                <ScalarProperty Name="preseason" ColumnName="preseason" />
+                <ScalarProperty Name="HomeTeamCode" ColumnName="HomeTeamCode" />
+                <ScalarProperty Name="HomeTeam" ColumnName="HomeTeam" />
+                <ScalarProperty Name="hometeamscore" ColumnName="hometeamscore" />
+                <ScalarProperty Name="VisitorTeamCode" ColumnName="VisitorTeamCode" />
+                <ScalarProperty Name="VisitorTeam" ColumnName="VisitorTeam" />
+                <ScalarProperty Name="visitorscore" ColumnName="visitorscore" />
+                <ScalarProperty Name="gamedtm" ColumnName="gamedtm" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ViewAllTeamRecordsPercts">
+            <EntityTypeMapping TypeName="SportsModel.ViewAllTeamRecordsPerct">
+              <MappingFragment StoreEntitySet="ViewAllTeamRecordsPerct">
+                <ScalarProperty Name="seasonid" ColumnName="seasonid" />
+                <ScalarProperty Name="conf_cd" ColumnName="conf_cd" />
+                <ScalarProperty Name="div_cd" ColumnName="div_cd" />
+                <ScalarProperty Name="team_cd" ColumnName="team_cd" />
+                <ScalarProperty Name="team" ColumnName="team" />
+                <ScalarProperty Name="WINS" ColumnName="WINS" />
+                <ScalarProperty Name="LOSES" ColumnName="LOSES" />
+                <ScalarProperty Name="PERCT" ColumnName="PERCT" />
+                <ScalarProperty Name="HOMEREC" ColumnName="HOMEREC" />
+                <ScalarProperty Name="AWAYREC" ColumnName="AWAYREC" />
+                <ScalarProperty Name="preseason" ColumnName="preseason" />
+                <ScalarProperty Name="MaxGameDtm" ColumnName="MaxGameDtm" />
+                <ScalarProperty Name="PlayOffRnd" ColumnName="PlayOffRnd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ViewAllTeamRecordsPerctGamesBehinds">
+            <EntityTypeMapping TypeName="SportsModel.ViewAllTeamRecordsPerctGamesBehind">
+              <MappingFragment StoreEntitySet="ViewAllTeamRecordsPerctGamesBehind">
+                <ScalarProperty Name="seasonid" ColumnName="seasonid" />
+                <ScalarProperty Name="conf_cd" ColumnName="conf_cd" />
+                <ScalarProperty Name="div_cd" ColumnName="div_cd" />
+                <ScalarProperty Name="team_cd" ColumnName="team_cd" />
+                <ScalarProperty Name="team" ColumnName="team" />
+                <ScalarProperty Name="WINS" ColumnName="WINS" />
+                <ScalarProperty Name="LOSES" ColumnName="LOSES" />
+                <ScalarProperty Name="PERCT" ColumnName="PERCT" />
+                <ScalarProperty Name="HOMEREC" ColumnName="HOMEREC" />
+                <ScalarProperty Name="AWAYREC" ColumnName="AWAYREC" />
+                <ScalarProperty Name="preseason" ColumnName="preseason" />
+                <ScalarProperty Name="MaxGameDtm" ColumnName="MaxGameDtm" />
+                <ScalarProperty Name="GB" ColumnName="GB" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

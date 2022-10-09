@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="235b3ff28cc1412d862727ddca3f5ad5" Name="Diagram1">
+        <EntityTypeShape EntityType="SportsModel.Franchise" Width="1.5" PointX="5.25" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SportsModel.FranchiseName" Width="1.5" PointX="7.5" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SportsModel.FranchiseOwner" Width="1.5" PointX="3" PointY="18.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SportsModel.FranchisePosition" Width="1.5" PointX="7.5" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SportsModel.FranchiseSportType" Width="1.5" PointX="10.5" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SportsModel.FranchiseTeam" Width="1.5" PointX="10.5" PointY="16.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SportsModel.Person" Width="1.5" PointX="3" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SportsModel.PositionCode" Width="1.5" PointX="5.25" PointY="16.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SportsModel.Season" Width="1.5" PointX="5.25" PointY="20" IsExpanded="true" />
+        <EntityTypeShape EntityType="SportsModel.SportType" Width="1.5" PointX="3" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SportsModel.SportTypeGroup" Width="1.5" PointX="0.75" PointY="13.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SportsModel.Stadium" Width="1.5" PointX="5.25" PointY="23.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SportsModel.StadiumSurfaceCode" Width="1.5" PointX="3" PointY="23.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SportsModel.StateCode" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="SportsModel.FK__Franchise__Franc__2003926C" ManuallyRouted="false" />
+        <AssociationConnector Association="SportsModel.FK__Franchise__Franc__20C2AC7B" ManuallyRouted="false" />
+        <AssociationConnector Association="SportsModel.FK__Franchise__Franc__20F7B6A5" ManuallyRouted="false" />
+        <AssociationConnector Association="SportsModel.FK__Franchise__franc__4905A7FF" ManuallyRouted="false" />
+        <AssociationConnector Association="SportsModel.FK__Franchise__owner__64ADC274" ManuallyRouted="false" />
+        <AssociationConnector Association="SportsModel.FK__Franchise__Sport__1B3EDD4F" ManuallyRouted="false" />
+        <AssociationConnector Association="SportsModel.FK__Franchise__Perso__79DDE984" ManuallyRouted="false" />
+        <AssociationConnector Association="SportsModel.FK__Franchise__Posit__7AD20DBD" ManuallyRouted="false" />
+        <AssociationConnector Association="SportsModel.FK__Franchise__Sport__21B6D0B4" ManuallyRouted="false" />
+        <AssociationConnector Association="SportsModel.FK__Franchise__seaso__49F9CC38" ManuallyRouted="false" />
+        <AssociationConnector Association="SportsModel.FK__Person__SportTyp__298CFCA6" ManuallyRouted="false" />
+        <AssociationConnector Association="SportsModel.FK__PositionC__Sport__760D58A0" ManuallyRouted="false" />
+        <AssociationConnector Association="SportsModel.FK__Season__SportTyp__27D9BE5E" ManuallyRouted="false" />
+        <AssociationConnector Association="SportsModel.FK__SportType__Sport__1BFDF75E" ManuallyRouted="false" />
+        <AssociationConnector Association="SportsModel.FK__StadiumSu__Sport__07F6FEB1" ManuallyRouted="false" />
+        <AssociationConnector Association="SportsModel.FK__Stadium__Stadium__593C0FC8" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,74 @@
+﻿body {
+    color: tan;
+    background-color: red;
+    color: black;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: orange;
+    text-align: center;
+}
+
+span {
+    color: orange;
+}
+
+#NavbarTitle {
+    color: aquamarine;
+    font-family: 'Times New Roman';
+    font-size: x-large;
+}
+
+#ErrorReturnHome {
+    color: orange;
+    font-weight: bold;
+}
+
+    #ErrorReturnHome:hover {
+        color: white;
+        font-weight: bold;
+    }
+
+#MainEntry {
+    color: green;
+}
+
+    #MainEntry:hover {
+        color: white;
+    }
+
+#MainError {
+    color: maroon;
+}
+
+    #MainError:hover {
+        color: white;
+    }
+
+#testing:hover {
+    background: green;
+}
+
+/*this sets thead buttons initial text*/
+#testing::after {
+    content: "New request!";
+}
+
+/*this changes thead initial text*/
+#testing:hover::after {
+    content: "Completed!";
+}
+
+#testing:active {
+    background: #1292e1;
+}
+
+    #testing:active::after {
+        background: #1292e1;
+    }
+
+#test_anchor.testclass {
+    font-weight: bold;
+    font-size: xx-large;
+    color: red;
+}

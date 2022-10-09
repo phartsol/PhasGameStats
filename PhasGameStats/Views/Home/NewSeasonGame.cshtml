@@ -1,0 +1,271 @@
+﻿@model PhasGameStats.ViewModels.SeasonGameVM
+
+@{
+    ViewBag.Title = "CreateNewGame";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2 style="text-align:center;"><em>Welcome To Phas Game Stats!</em></h2>
+
+@if (!string.IsNullOrEmpty(Session["Msg"] as string))
+{
+    <br />
+    <h6 style="text-align:center;"><i>@Session["Msg"]</i></h6>
+}
+
+--
+    @*@if(Model != null)
+    {
+        if(Model.Game.seasonId == 0)
+        {
+            <div style="text-align:center">
+                <span style="text-align:center;"><em>Enter The Teams and Start Time of the First Game of the New @Model.sta Season</em></span>
+            </div>
+        }
+        else
+        {
+            <div style="text-align:center">
+                <h4 style="text-align:center;">Enter The Teams and Start Time of the @Model.SeasonForGame.startdate.Year</h4>
+            </div>
+        }
+    }*@
+    --
+<br />
+<br />
+
+
+@using (Html.BeginForm("SaveGame", "Home", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+
+    @*<div class="form-group row">
+
+        <div class="col-1"></div>
+
+        @Html.LabelFor(m => Model.Game.hometeam, htmlAttributes: new { @class = "control-label mt-1" })
+        <div class="col-sm-3">
+            @Html.DropDownListFor(m => Model.Game.hometeam, Model.HomeTeams, "Select...", new { @class = "form-control", id = "hometeam" })
+            @Html.ValidationMessageFor(m => Model.Game.hometeam, "", new { @style = "color: red" })
+        </div>
+
+        <div class="col-2">
+            @Html.LabelFor(m => Model.Game.preseason, "Pre-Season", htmlAttributes: new { @class = "control-label ml-2" })
+
+            @Html.CheckBoxFor(m => Model.Game.preseason, false)
+        </div>
+
+        @Html.LabelFor(m => Model.Game.visitor, htmlAttributes: new { @class = "control-label mt-1" })
+        <div class="col-sm-3">
+            @Html.DropDownListFor(m => Model.Game.visitor, Model.VisitorTeams, "Select...", new { @class = "form-control", id = "visitorteam" })
+        </div>
+    </div>*@
+
+
+    <div class="form-group row mt-4">
+        <div class="col-1"></div>
+
+        @Html.LabelFor(m => Model.SelectedStatus, htmlAttributes: new { @class = "control-label mt-1" })
+        <div class="col-sm-3 ml-5">
+            @Html.DropDownListFor(m => Model.SelectedStatus, Model.statuses, new { @class = "form-control", style = "width: 225px;" })
+            @Html.ValidationMessageFor(m => Model.SelectedStatus)
+        </div>
+
+        <div class="col-2"></div>
+
+        <div class="form-check">
+
+            @Html.LabelFor(m => Model.timeunknown, "Time Unknown", new { @class = "form-check-label" })
+            <div class="col-sm-4 mt-1 ml-5">
+                @Html.CheckBoxFor(m => m.timeunknown, new { @class = "form-check-input" })
+            </div>
+
+        </div>
+
+
+        @*// Example of setting attribues for HTML Helper*@
+        @*@Html.CheckBoxFor(m => m.Tea, new {
+              @value = "Tea",
+              @class = "red",
+              //@disabled="true",
+              @checked = "true",
+              @title = "Select, If you want tea.",
+              @tabindex = "0",
+              //@accesskey="z",
+              @align = "left",
+              @autofocus = "true",
+              @style = "background-color:yellow; font-weight:bold",
+              @draggable = "true",
+              //@hidden="true",
+              //@maxlength="12",
+            })*@
+
+    </div>
+
+
+    <div class="form-group row mt-4">
+
+        <div class="col-1"></div>
+
+        @Html.LabelFor(m => Model.SelectedHomeScore, new { @class = "control-label", id = "homescore", style = "display: none;" })
+        <div class="col-sm-1 ml-4">
+            @Html.DropDownListFor(m => Model.SelectedHomeScore, Model.scores, new { @class = "form-control", size = "1", style = "width: 80px; display: none;" })
+        </div>
+
+        @Html.LabelFor(m => Model.SelectedVisitorScore, new { @class = "control-label ml-3", id = "visitorscore", style = "display: none;" })
+        <div class="col-sm-1">
+            @Html.DropDownListFor(m => Model.SelectedVisitorScore, Model.scores, new { @class = "form-control", size = "1", style = "width: 80px; display: none;" })
+        </div>
+
+        @Html.LabelFor(m => Model.SelectedOT, "OT", new { @class = "control-label ml-3", id = "overtime", style = "display: none;" })
+        <div class="col-sm-1">
+            @Html.DropDownListFor(m => Model.SelectedOT, Model.OTList, new { @class = "form-control", id = "SelectedOT", size = "1", style = "width: 60px; display: none;" })
+        </div>
+
+
+
+
+    </div>
+
+
+    <div class="form-group row mt-4">
+
+        <div class="col-1"></div>
+
+        @*@Html.LabelFor(m => Model.Game.gamedtm, new { htmlAttributes = new { @class = "control-label" } })
+        <div class="col-sm-3 ml-3">
+            @Html.EditorFor(m => Model.Game.gamedtm, new { @class = "datepicker" })
+            @Html.ValidationMessageFor(m => Model.Game.gamedtm, "", new { @class = "text-danger" })
+        </div>*@
+
+        <div class="col-1"></div>
+
+        <div class="form-group row" id="gametime">
+
+            @Html.LabelFor(m => Model.hour, new { htmlAttributes = new { @class = "control-label" } })
+            <div class="col-sm-3">
+                @Html.DropDownListFor(m => Model.hour, Model.hours, new { @class = "form-control", size = "1", style = "width: 70px" })
+            </div>
+
+            @Html.LabelFor(m => Model.minute, new { htmlAttributes = new { @class = "control-label" } })
+            <div class="col-sm-3">
+                @Html.DropDownListFor(m => Model.minute, Model.minutes, new { @class = "form-control", size = "1", style = "width: 70px" })
+            </div>
+
+            @Html.LabelFor(m => Model.amORpm, new { htmlAttributes = new { @class = "control-label" } })
+            <div class="col-sm-2">
+                @Html.DropDownListFor(m => Model.amORpm, Model.AMPM, new { @class = "form-control", style = "width: 75px" })
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row" style="text-align:center;">
+        <div class="col-md-2"></div>
+
+        <div class="col-md-8 mt-3">
+            <div class="form-group">
+                <button type="submit" class="btn btn-outline-primary mr-5">Create Game</button>
+            </div>
+        </div>
+
+        <div class="col-md-2"></div>
+    </div>
+
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Dashboard")
+</div>
+
+@*@section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }*@
+
+@*<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>*@
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        var TeamListURL = '@Url.Action("FetchAvailableTeamList")';
+
+        var hometeamList = document.getElementById("hometeam");
+
+        var visitorteamList = document.getElementById("visitorteam");
+
+        var homelabel = document.getElementById("homescore");
+        var homescore = document.getElementById("SelectedHomeScore");
+        var visitorlabel = document.getElementById("visitorscore");
+        var visitorscore = document.getElementById("SelectedVisitorScore");
+        var overtimelabel = document.getElementById("overtime");
+        var overtime = document.getElementById("SelectedOT");
+
+
+        $('#timeunknown').change(function () {
+
+            var notime = document.getElementById("timeunknown").checked;
+            var time = document.getElementById("gametime");
+
+            time.style.display = time.style.display === 'none' ? '' : 'none';
+        });
+
+        $(hometeamList).change(function () {
+
+            $('#visitorteam').empty();
+
+            var sporttype = '@Session["SelectedSportsType"]';
+            var sportyear = '@Session["SelectedYear"]';
+            var teamcd = hometeamList.value;
+
+            $('#visitorteam').append($('<option></option>').val('').text('Select...'));
+
+            $.getJSON(TeamListURL, { sportyear: sportyear, sportcode: sporttype, team: teamcd }, function (data) {
+                if (!data) {
+                    alert('No Data Found');
+                    return;
+                }
+                $.each(data, function (index, item) {
+                    $('#visitorteam').append($('<option></option').val(item.Value).text(item.Text));
+                });
+            });
+
+        });
+
+
+        $('#SelectedStatus').change(function () {
+
+            var gamestatus = $('#SelectedStatus').val();
+
+            if (gamestatus === "CP" || gamestatus === "IP" || gamestatus === "DL" || gamestatus === "CO") {
+
+                homelabel.style.display = "inline";
+                homescore.style.display = "inline";
+                visitorlabel.style.display = "inline";
+                visitorscore.style.display = "inline";
+                if (gamestatus === "CO") {
+                    overtime.style.display = "inline";
+                    overtimelabel.style.display = "inline";
+                } else {
+                    overtime.style.display = "none";
+                    overtimelabel.style.display = "none";
+                }
+            }
+            else {
+                homelabel.style.display = "none";
+                homescore.style.display = "none";
+                visitorlabel.style.display = "none";
+                visitorscore.style.display = "none";
+                overtime.style.display = "none";
+                overtimelabel.style.display = "none";
+            }
+        });
+    });
+
+
+</script>
+
+
+
+

@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Pharticus Solutions</title>
+
+    <link rel="icon" href="~/images/phartsol.jpg">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    @*<link rel="stylesheet" href="~/Content/bootstrap.min.css">*@
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    @*<script src="~/Scripts/jquery-3.5.1.min.js"></script>*@
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    @*<script src="~/Scripts/popper.min.js"></script>*@
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    @*<script src="~/Scripts/bootstrap.min.js"></script>*@
+
+</head>
+
+<body style="padding-top: 0px; padding-left: 0px; background-color: aliceblue">
+
+    <nav style="background-color:rebeccapurple" class="navbar navbar-expand-sm navbar-fixed-top mb-2">
+
+        <a id="NavbarTitle" class="navbar-brand mb-1" href="/home/index"><em>PhaS Game Stats!</em></a>
+
+        @if (Session["UserID"] != null)
+        {
+            <a class="mr-3" style="color:orangered;"><em>Welcome @Session["FirstName"]!</em></a>
+        }
+
+    </nav>
+
+    @RenderSection("scripts", required: false)
+
+    @Styles.Render("~/Styles/mainv2.css")
+    @Scripts.Render("~/Scripts/MyScripts/main.js")
+    <script src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
+
+
+    <div class="container">
+        @RenderBody()
+        <hr />
+
+        <div class="navbar fixed-bottom justify-content-center">
+            <footer style="background-color:cornflowerblue;text-align:center; width:700px; font-size:small">
+                <span style="color:honeydew;">All rights reserved -  Pharticus Solutions&copy;   @DateTime.Now.Year</span>
+            </footer>
+        </div>
+
+    </div>
+
+
+
+    <script>
+            //window.onload = function () {
+            //    if (window.jQuery) {
+            //        // jQuery is loaded
+            //        alert("Yeah!");
+            //    } else {
+            //        // jQuery is not loaded
+            //        alert("Doesn't Work");
+            //    }
+            //};
+
+            //$(document).ready(function () {
+            //    alert('Layout');
+            //});
+    </script>
+
+</body>
+</html>

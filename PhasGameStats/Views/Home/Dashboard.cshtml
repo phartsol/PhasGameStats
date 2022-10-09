@@ -1,0 +1,477 @@
+﻿@model PhasGameStats.ViewModels.DashboardVM
+
+@{
+    ViewBag.Title = "Phas Stats - Enter Site";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2 style="text-align:center;" class="mt-4 mb-3"><em>PhaS Stats Dashboard</em></h2>
+<br />
+<h6 style="text-align:center;"><em>Run Stats for Selected Sport and Year!</em></h6>
+<hr />
+
+@using (Html.BeginForm("ViewStatsBySportByYear", "Stats", FormMethod.Post, new { role = "form" }))
+{
+    @Html.AntiForgeryToken();
+
+<div class="form-group row">
+
+    <div class="col-2"></div>
+
+    @{
+        if (@Model != null)
+        {
+            <div class="col-3">
+                @Html.DropDownListFor(m => Model.SelectedSportsTypeForHistoralYears, Model.AllSports, "Select...", new { @class = "form-control", style = "width: 270px;" })
+            </div>
+
+            <div class="col-2 ml-5">
+                @Html.DropDownListFor(m => Model.SelectedHistoricalYear, Model.HistoricalYears, new { @class = "form-control", style = "width: 90px;" })
+            </div>
+        }
+    }
+
+
+    <div class="col-4" style="text-align:left;">
+        <button type="submit" class="btn btn-outline-primary" for="SelectedHistoricalYear">Display Stats...</button>
+    </div>
+</div>
+}
+
+<div class="row">
+    <div class="col-12">
+        <h5 id="NoGamesFound" style="color:orangered; text-align:center; font-style:italic; display:none;"><small>No Games Found For Selected Sport/Year</small></h5>
+    </div>
+</div>
+<br />
+<br />
+
+<h6 style="text-align:center;"><em id="btm_header">Add, Import or Update Game Data!</em></h6>
+
+<h6 style="text-align:center;"><em id="SavedSeason"></em></h6>
+
+
+<hr />
+
+@using (Html.BeginForm("NewSeasonGame", "Home", FormMethod.Post, new { role = "form" }))
+{
+    @Html.AntiForgeryToken();
+
+    <div class="form-group row">
+
+        <div class="col-2"></div>
+
+        <div class="form-group col-3 mr-4">
+            @Html.DropDownListFor(m => Model.SelectedSportsTypeForRecentYears, Model.AllSports, "Select...", new { @class = "form-control mt-2", style = "width: 270px;" })
+        </div>
+
+        @*Html.RadioButtonFor(model => property, object value, object htmlAttributes)
+              RadioButton(string name, object value, bool isChecked, object htmlAttributes) "name" must match a model property
+
+            @Html.RadioButton("TeaType","Tea",false)
+
+            @Html.RadioButtonFor(m => m.TeaType, "Tea",
+             new {                                                              List of Available Attributes and syntax/examples
+              @value = "Tea",
+               @class = "red",
+               //@disabled="true",
+               @checked = "true",
+               @title = "Select, If you want tea.",
+               @tabindex = "0",
+               //@accesskey="z",
+               @align = "left",
+               @autofocus = "true",
+               @style = "background-color:yellow; font-weight:bold",
+               @draggable = "true",
+               //@hidden="true",
+               //@maxlength="12",
+             })*@
+
+        <div class="col-1 pr-0">
+
+            &nbsp;&nbsp;Game: @Html.RadioButton("SeasonOrGame", "Game", true, new { @class = "seasonorgame game" })
+            Season: @Html.RadioButton("SeasonOrGame", "Season", new { @class = "seasonorgame season" })
+
+            @*<input type="radio" id="game" name="gameorseason" value="Game" class="gameorseason" checked>
+                &nbsp;<label for="game">Game</label><br />
+                <input type="radio" id="season" name="gameorseason" value="Season" class="gameorseason">
+                &nbsp;<label for="season">Season</label><br>*@
+
+        </div>
+
+        <div class="col-1">
+            @Html.DropDownListFor(m => Model.SelectedRecentYear, Model.RecentYears, new { @class = "form-control", style = "width: 90px;" })
+        </div>
+
+        <div class="col-2" style="text-align:right;">
+            <button type="submit" id="NewSeasonGame" class="btn btn-outline-primary">Create New</button>
+        </div>
+
+        <div class="col-3"></div>
+
+    </div>
+}
+
+<br />
+@*<br />
+<br />*@
+
+@using (Html.BeginForm("NewGame", "Home", FormMethod.Post, new { role = "form" }))
+    {
+
+        @Html.AntiForgeryToken();
+
+
+        <div class="row" style="text-align:center;">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-outline-success mr-5">Add a Game To a Season</button>
+                </div>
+            </div>
+        </div>
+
+    }
+
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        @*var test = '@Model.SelectedHistoricalYear';
+        alert(test);*@
+
+
+            // get the sporttype from the sport type dropdown
+        @*var HistoricalYearsUrl = '@Url.Action("FetchHistoricalYearsList")';
+        var RecentYearsUrl = '@Url.Action("FetchRecentYearsList")';*@
+
+
+        var FetchYearsListUrl = '@Url.Action("FetchYearsList")';
+
+        //$('#SelectedSportsTypeForHistoralYears_sportstypecd').change(function () {
+        $('#SelectedSportsTypeForHistoralYears').change(function () {
+
+            $('#SelectedHistoricalYear').empty();
+            $('#SelectedHistoricalYear').append($('<option></option>').val('').text('Select...'));
+
+            $.getJSON(FetchYearsListUrl, { sporttype: $(this).val() }, function (data) {
+                if (!data) {
+                    alert('No Historical Year Data');
+                    return;
+                }
+                $.each(data, function (i, value) {
+                    $('#SelectedHistoricalYear').append('<option>' + value + '</option>');
+                });
+            });
+
+        });
+
+
+            // change in sport type, retreive recent years based on selected sport type
+        $('#SelectedSportsTypeForRecentYears').change(function () {
+
+            if ($(this).val() !== '') {
+
+                if ($('.game').is(':checked')) {
+
+                    $('#SelectedRecentYear').empty();
+                    $('#SelectedRecentYear').append($('<option></option>').val('').text('Select...'));
+
+                    $.getJSON(FetchYearsListUrl, { sporttype: $(this).val() }, function (data) {
+                        if (!data) {
+                            alert('No Recent Year Data');
+                            return;
+                        }
+                        $.each(data, function (i, value) {
+                            //$('#SelectedRecentYear').append($('<option></option').val(value.Text).text(value.Value));
+                            $('#SelectedRecentYear').append('<option>' + value + '</option>');
+                        });
+                    });
+                } else {
+                    var selectedsporttypeforentry = $(this).val();
+
+                    $('#SelectedRecentYear').empty();
+
+                    // assign the "fetch data" method
+                    var NewSeasonURL = '@Url.Action("FetchNewSeasonBySportType")';
+
+                    $.getJSON(NewSeasonURL, { sportType: selectedsporttypeforentry }, function (data) {
+
+                        $.each(data, function (i, value) {
+                            //alert(data[i]);             // each of these return the same
+                            //alert(value);               // and each returns the needed value
+                            //value += 1;
+                            $('#SelectedRecentYear').html('<option>' + value + '</option>');
+                        });
+                    });
+
+                    $("#SelectedRecentYear").attr("selected", "selected");
+                }
+            } else {
+                $('#SelectedRecentYear').empty();
+            }
+        });
+
+
+        $('.seasonorgame').click(function () {
+
+            if ($('.season').is(':checked')) {
+
+                // change header
+                $('#btm_header').html('Add New Season!');
+                $('#SavedSeason').html('');
+
+                    // empty and disable the recentyear dropdown
+                $('#SelectedRecentYear').empty();
+                //$('#SelectedRecentYear').prop("disabled", true);
+
+                var selectedsporttypeforentry = $('#SelectedSportsTypeForRecentYears').val();
+                if (selectedsporttypeforentry !== '') {
+
+                        // assign the "fetch data" method
+                    var NewSeasonURL = '@Url.Action("FetchNewSeasonBySportType")';
+
+                    $.getJSON(NewSeasonURL, { sportType: selectedsporttypeforentry }, function (data) {
+
+                        $.each(data, function (i, value) {
+                            //alert(data[i]);             // each of these return the same
+                            //alert(value);               // and each returns the needed value
+                            //value += 1;
+                            $('#SelectedRecentYear').html('<option>' + value + '</option>');
+                        });
+                    });
+
+                    $("#SelectedRecentYear").attr("selected", "selected");
+                } else {
+                    $('#SelectedRecentYear').empty();
+                }
+
+            } else {
+                $('#btm_header').html('Add, Import or Update Game Data!');
+
+                $('#SelectedRecentYear').empty();
+                //$('#SelectedRecentYear').append($('<option></option>').val('').text('Select...'));
+
+                selectedsporttypeforentry = $('#SelectedSportsTypeForRecentYears').val();
+                if (selectedsporttypeforentry !== '') {
+
+                    $.getJSON(RecentYearsUrl, { sportcode: selectedsporttypeforentry }, function (data) {
+                        if (!data) {
+                            alert('No Recent Year Data');
+                            return;
+                        }
+                        $.each(data, function (index, value) {
+                            $('#SelectedRecentYear').append($('<option></option').val(value.Text).text(value.Value));
+                        });
+                    });
+
+                    $("#SelectedRecentYear").attr("selected", "selected");
+                }
+            }
+
+
+        });
+
+
+            // Save Season Funcationality
+
+        $('#NewSeasonGame').click(function () {
+
+            
+            var SaveSeasonUrl = '@Url.Action("SaveSeason")';
+
+            alert('1');
+
+            var SportType = $('#SelectedSportsTypeForRecentYears').val();
+            var SportYear = $('#SelectedRecentYear').val();
+
+            $.getJSON(SaveSeasonUrl, { sportsTypeCd: SportType, selectedYear: SportYear }, function (data) {
+                alert('Hello22');
+                $('#SavedSeason').fadeIn();
+                $('#SavedSeason').html("Successfully Created The " + SportYear + " " + SportType + " Season");
+                $('#SavedSeason').fadeOut(4000);
+            });
+        });
+
+
+
+
+    });
+
+
+
+
+
+
+                //$('#SelectedSportsTypeForSeason_sportstypecd').change(function () {
+
+                //    NewSeasonYearList.empty();
+                //    NewSeasonYearList.append($('<option></option').val('').text('Select...'));
+
+                //    $.getJSON(NewSeasonYearUrl, { sportcode: $(this).val() }, function (data) {
+                //        if (!data) {
+                //            alert('No New Year Data');
+                //            return;
+                //        }
+                //        $.each(data, function (index, item) {
+                //            NewSeasonYearList.append($('<option></option').val(item.Text).text(item.Value));
+                //        });
+                //    });
+
+                //});
+
+
+
+                //$('#SelectedSportsTypeForHistoralYears_sportstypecd').change(function () {
+                //    NewYearsList.Value = "NS";
+                //    RecentYearsList.Value = "NS";
+
+                //    NewYearsList.empty();
+
+                //    NewYearsList.append($('<option></option').val('').text('Select...'));
+
+                //    $.getJSON(NewYearsUrl, { sportcode: $(this).val() }, function (data) {
+                //        if (!data) {
+                //            alert('No New Year Data');
+                //            return;
+                //        }
+
+                //        $.each(data, function (index, item) {
+                //            NewYearsList.append($('<option></option').val(item.Text).text(item.Value));
+                //        });
+                //    });
+                //});
+
+</script>
+
+@*
+    //var NewSeasonYearUrl = '@Url.Action("FetchNewYearList")';
+    //var RecentYearsList = $('#SelectedRecentYear');
+    //var NewSeasonYearList = $('#SelectedNewSeasonYear');
+    //var NewSeasonYearSportList = $('#SelectedSportsTypeForSeason_sportstypecd');
+*@
+
+@* <div class="row" style="text-align:center;">
+        <div class="col-md-12">
+            <div class="form-group">
+                <button type="submit" class="btn btn-outline-success mr-5">Create A New Season</button>
+            </div>
+        </div>
+    </div> *@
+
+@*<form action="/home/CreateNewSeason" method="post">
+
+        @Html.AntiForgeryToken()
+
+        <div class="form-group" style="text-align:center;">
+
+            <label for="sportcd">Select a Sport&nbsp;</label>
+            <select name="SportTypes" id="sportcd">
+                @{
+                    foreach(var item in Model.SportTypes)
+                    {
+                        <option value=@item.sportstypecd>@item.sportstypedesc</option>
+                    }
+                }
+            </select>
+        </div>
+
+        <div class="form-group" style="text-align:center;">
+
+            <label for="year">Select a Year&nbsp;</label>
+            <select name="SportYear" id="year">
+                @{
+                    foreach (var item in Model.SportYear)
+                    {
+                        <option value=@item>@item.ToString()</option>
+                    }
+                }
+            </select>
+        </div>
+
+        <div class="form-group" style="text-align:center;">
+            <input class="btn btn-link" type="submit" value="Create New Season" name="submit" />
+        </div>
+
+
+        <hr />
+        <br />
+        <br />
+
+
+
+    </form>*@
+
+
+
+@*<div style="text-align:center;">
+
+        <label style="color:dodgerblue;" for="seasons.startdate"><a href="/home/ViewYearStats?">Select a Historical Season To View Statistics</a>&nbsp;&nbsp;&nbsp;</label>
+        <select id="seasons.startdate">
+            @{
+                foreach (var item in Model.seasons)
+                {
+                    <option value=@item.seasonid>@item.startdate.Year</option>
+                }
+            }
+        </select>
+    </div>
+
+    <hr />
+    <br />
+    <br />
+    <br />*@
+
+
+
+
+@*<div style="text-align:center;">
+
+        <a href="/home/CreateNewGame">New Game</a><br />
+
+        <a href="/home/CreateNewSeason">New Season</a>
+
+    </div>*@
+
+@*<div style="text-align:center; border:solid;">
+
+    <form action="/home/GetSelectedSport" method="post">
+
+        <div class="form-group" style="text-align:center">
+
+            <label style="color:dodgerblue;" for="id">Select a Sport:</label>
+            <select id="id" name="id">
+                @{
+                    foreach (var item in Model.sports)
+                    {
+                        <option value=@item.id>@item.sportstypedesc</option>
+                    }
+                }
+            </select>
+
+        </div>
+
+        <input type="submit" value="Enter New Season" />
+    </form>
+
+    <form action="/home/GetSelectedSport" method="post">
+
+        <div class="form-group" style="text-align:center">
+
+            <label style="color:dodgerblue;" for="id">Select a Season:</label>
+            <select id="id" name="id">
+                @{
+                    foreach (var item in Model.sports)
+                    {
+                        <option value=@item.id>@item.sportstypedesc</option>
+                    }
+                }
+            </select>
+
+        </div>
+
+
+        <input type="submit" value="Enter New Season" />
+    </form>*@
