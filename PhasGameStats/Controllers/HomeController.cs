@@ -26,7 +26,7 @@ namespace PhasGameStats.Controllers
 
         public ActionResult Dashboard()
         {
-            string test = "an edit only to engage git!";
+            string test = "an edit to hopefully the DEV branch in Github";
 
             Utility.ClearSession();
 
