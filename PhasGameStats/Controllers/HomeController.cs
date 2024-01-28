@@ -29,6 +29,8 @@ namespace PhasGameStats.Controllers
             string test = "an edit to hopefully the DEV branch in Github";
             test += " and another edit!.";
 
+            test += " ... and this is an edit by a junior developer";
+
             Utility.ClearSession();
 
             DashboardVM model = new DashboardVM();
