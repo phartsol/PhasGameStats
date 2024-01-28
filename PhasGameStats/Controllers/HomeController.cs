@@ -26,6 +26,8 @@ namespace PhasGameStats.Controllers
 
         public ActionResult Dashboard()
         {
+            string test = "an edit only to engage git!";
+
             Utility.ClearSession();
 
             DashboardVM model = new DashboardVM();
