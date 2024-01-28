@@ -72,7 +72,8 @@ namespace PhasGameStats.Controllers
         {
             model.Division = new List<TeamRecordVM>();
 
-            int seasonid = Session["SeasonID"] != null ? (int)Session["SeasonID"] : Utility.SetSeasonID(model.Year, model.SportType);
+            //int seasonid = Session["SeasonID"] != null ? (int)Session["SeasonID"] : Utility.SetSeasonID(model.Year, model.SportType);
+            int seasonId = model.SeasonId;
 
             string confcode = "";
             string divcode = "";
@@ -81,16 +82,17 @@ namespace PhasGameStats.Controllers
             {
                 case "NBA": confcode = "ETC"; divcode = "BEA"; break;
                 case "NFL": confcode = "NFL_AFC"; divcode = "AFC_EST"; break;
+                case "AAFC": confcode = ""; break;
                 default: confcode = ""; divcode = ""; break;
             }
 
-            model.Division = SetTeamRec(seasonid, false, confcode, divcode);
+            model.Division = getTeamRec(seasonId, false, confcode, divcode);
 
             return (model);
         }
 
 
-        private List<TeamRecordVM> SetTeamRec(int seasonid, bool preseason, string confcode, string divcode)
+        private List<TeamRecordVM> getTeamRec(int seasonid, bool preseason, string confcode, string divcode)
         {
             using (var service = new GameStatsService())
             {
@@ -153,7 +155,7 @@ namespace PhasGameStats.Controllers
 
             int seasonid = Session["SeasonID"] != null ? (int)Session["SeasonID"] : Utility.SetSeasonID(year, sportcode);
 
-            List<TeamRecordVM> TeamRecordList = SetTeamRec(seasonid, false, confcode, divcode);
+            List<TeamRecordVM> TeamRecordList = getTeamRec(seasonid, false, confcode, divcode);
 
             return Json(new { data = TeamRecordList }, JsonRequestBehavior.AllowGet);
 

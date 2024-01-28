@@ -78,7 +78,14 @@ namespace Service.Repository
 
         public int NewSeasonBySportType(string sportType)
         {
-            return _entities.Seasons.Where(x => x.SportTypeCode.Equals(sportType)).OrderByDescending(y => y.startdate).FirstOrDefault().startdate.Year + 1;
+            if (_entities.Seasons.Where(x => x.SportTypeCode.Equals(sportType)).Any())
+            {
+                return _entities.Seasons.Where(x => x.SportTypeCode.Equals(sportType)).OrderByDescending(y => y.startdate).FirstOrDefault().startdate.Year + 1;
+            }
+            else
+            {
+                return -1;
+            }
         }
 
 
