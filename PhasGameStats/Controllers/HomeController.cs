@@ -27,6 +27,7 @@ namespace PhasGameStats.Controllers
         public ActionResult Dashboard()
         {
             string test = "an edit to hopefully the DEV branch in Github";
+            test += " and another edit!.";
 
             Utility.ClearSession();
 
